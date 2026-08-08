@@ -16,6 +16,8 @@
             padding: 0;
             color: #2b2b2b;
             background: #faf9f6;
+            padding-top: 78px;
+            /* évite que le contenu passe sous la nav fixe */
         }
 
         nav {
@@ -25,6 +27,16 @@
             padding: 20px 40px;
             background: #ffffff;
             border-bottom: 1px solid #e7e3da;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            transition: transform 0.3s ease;
+        }
+
+        nav.nav-hidden {
+            transform: translateY(-100%);
         }
 
         nav .logo {
@@ -72,6 +84,52 @@
 
         nav .links button:hover {
             color: #a9762f;
+        }
+
+        /* --- Burger menu --- */
+        .burger {
+            display: none;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 26px;
+            height: 18px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            z-index: 1100;
+        }
+
+        .burger span {
+            display: block;
+            height: 2px;
+            width: 100%;
+            background: #1f1f1f;
+            transition: all 0.3s ease;
+        }
+
+        .burger.open span:nth-child(1) {
+            transform: translateY(8px) rotate(45deg);
+        }
+
+        .burger.open span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .burger.open span:nth-child(3) {
+            transform: translateY(-8px) rotate(-45deg);
+        }
+
+        .overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.4);
+            z-index: 999;
+        }
+
+        .overlay.open {
+            display: block;
         }
 
         .container {
@@ -240,28 +298,53 @@
             padding: 60px 0;
         }
 
+        .pagination-wrapper {
+            margin-top: 50px;
+            display: flex;
+            justify-content: center;
+            font-family: Arial, sans-serif;
+        }
+
         @media (max-width: 900px) {
             .grid {
                 grid-template-columns: repeat(2, 1fr);
             }
         }
 
-        @media (max-width: 600px) {
-            nav {
-                padding: 16px 18px;
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 10px;
+        @media (max-width: 768px) {
+            .burger {
+                display: flex;
             }
 
             nav .links {
-                flex-wrap: wrap;
+                position: fixed;
+                top: 0;
+                right: -100%;
+                height: 100vh;
+                width: 250px;
+                background: #ffffff;
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 90px 24px 24px;
+                transition: right 0.3s ease;
+                box-shadow: -4px 0 12px rgba(0, 0, 0, 0.08);
+            }
+
+            nav .links.open {
+                right: 0;
             }
 
             nav .links a,
             nav .links button {
                 margin-left: 0;
-                margin-right: 18px;
+                margin-bottom: 20px;
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 600px) {
+            nav {
+                padding: 16px 18px;
             }
 
             .grid {
@@ -277,18 +360,23 @@
 
 <body>
 
-    <nav>
+    <nav id="mainNav">
         <div class="logo">⌚ Watches Shop</div>
-        <div class="links">
+
+        <button class="burger" id="burgerBtn" aria-label="Menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
+        <div class="links" id="navLinks">
             <a href="{{ route('home') }}" class="active">Home</a>
-            <a href="{{ route('categories.index') }}">Categories</a>
+            <a href="{{ route('categories') }}">Categories</a>
             @if (Route::has('login'))
                 @auth
                     <a href="{{ route('dashboard') }}">Dashboard</a>
 
-                    @if (auth()->user()->isAdmin() || auth()->user()->isEditor())
-                        <a href="{{ route('watches.index') }}">Manage Watches</a>
-                    @endif
+                  
 
                     <a href="{{ route('profile.edit') }}">Profile</a>
                     <form method="POST" action="{{ route('logout') }}">
@@ -306,8 +394,11 @@
         </div>
     </nav>
 
+    <div class="overlay" id="overlay"></div>
+
     <div class="container">
-        <h1>Last Watches</h1>
+
+        <h1>All Watches</h1>
 
         @if ($watches->count() > 0)
             <div class="grid">
@@ -343,13 +434,54 @@
                 @endforeach
             </div>
 
-            <div class="see-all">
-                <a href="{{ route('categories.index') }}">See All Categories</a>
+            <div class="pagination-wrapper">
+                {{ $watches->links() }}
             </div>
+
         @else
             <div class="empty-msg">No watches available yet.</div>
         @endif
     </div>
+
+    <script>
+        // --- Menu responsive (burger) ---
+        const burger = document.getElementById('burgerBtn');
+        const navLinks = document.getElementById('navLinks');
+        const overlay = document.getElementById('overlay');
+
+        burger.addEventListener('click', () => {
+            burger.classList.toggle('open');
+            navLinks.classList.toggle('open');
+            overlay.classList.toggle('open');
+        });
+
+        overlay.addEventListener('click', () => {
+            burger.classList.remove('open');
+            navLinks.classList.remove('open');
+            overlay.classList.remove('open');
+        });
+
+        // --- Nav qui se cache au scroll down / réapparaît au scroll up ---
+        const nav = document.getElementById('mainNav');
+        let lastScroll = 0;
+
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.scrollY;
+
+            if (currentScroll <= 0) {
+                nav.classList.remove('nav-hidden');
+                return;
+            }
+
+            if (currentScroll > lastScroll && currentScroll > 80) {
+                nav.classList.add('nav-hidden');
+            } else {
+                nav.classList.remove('nav-hidden');
+            }
+
+            lastScroll = currentScroll;
+        });
+    </script>
 
 </body>
 

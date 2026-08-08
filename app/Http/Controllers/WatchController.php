@@ -11,10 +11,9 @@ class WatchController extends Controller
 
 public function home()
 {
-    $watches = Watch::latest()->take(6)->get();
+    $watches = Watch::with('category')->latest()->paginate(12);
     return view('welcome', compact('watches'));
 }
-
 
     /**
      * Display a listing of the resource.
@@ -106,9 +105,10 @@ public function destroy(Watch $watch)
     return redirect()->route('watches.index')
         ->with('success', 'Watch deleted successfully!');
 }
+
 public function categories()
 {
     $categories = Category::all();
-    return view('categories.index', compact('categories'));
+    return view('categories.public', compact('categories'));
 }
 }
