@@ -111,4 +111,9 @@ public function categories()
     $categories = Category::all();
     return view('categories.public', compact('categories'));
 }
+public function categoryShow(\App\Models\Category $category)
+{
+    $watches = $category->watches;
+    return view('categories.public_show', compact('category', 'watches'));
+}
 }

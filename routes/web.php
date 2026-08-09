@@ -13,6 +13,7 @@ Route::get('/', [WatchController::class, 'home'])->name('home');
 Route::get('/all-categories', [WatchController::class, 'categories'])->name('categories');
 Route::get('/categories/{category}', [CategoryController::class, 'show'])->name('categories.show');
 Route::get('/watches/{watch}', [WatchController::class, 'show'])->name('watches.show');
+Route::get('/all-categories/{category}', [WatchController::class, 'categoryShow'])->name('categories.public_show');
 
 // ============================
 // Dashboard Breeze standard
