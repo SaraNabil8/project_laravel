@@ -53,6 +53,6 @@ class User extends Authenticatable
         } else if ($this->isAdmin()) {
             return ('admin_dashboard');
         }
-        return RouteServiceProvider::HOME;
+ return 'dashboard';
     }
 }

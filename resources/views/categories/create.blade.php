@@ -3,123 +3,188 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add a Watch</title>
+    <title>Add Category - SN Watches</title>
+
     <style>
         * {
             box-sizing: border-box;
         }
+
         body {
             font-family: Arial, sans-serif;
-            max-width: 600px;
-            margin: 40px auto;
-            padding: 0 15px;
-            color: #333;
-        }
-        h2 {
-            margin-bottom: 10px;
-        }
-        .back-link {
-            display: inline-block;
-            margin-bottom: 20px;
-            color: #2563eb;
-            text-decoration: none;
-        }
-        .error-box {
-            background: #f8d7da;
-            color: #842029;
-            padding: 12px 15px;
-            border-radius: 5px;
-            margin-bottom: 20px;
-        }
-        .error-box ul {
+            background: #faf9f6;
+            color: #2b2b2b;
             margin: 0;
-            padding-left: 20px;
-        }
-        form {
-            background: #f9fafb;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-        }
-        .field {
-            margin-bottom: 16px;
-        }
-        label {
-            display: block;
-            margin-bottom: 6px;
-            font-weight: bold;
-            font-size: 14px;
-        }
-        input[type="text"],
-        input[type="number"],
-        input[type="file"],
-        textarea {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #d1d5db;
-            border-radius: 5px;
-            font-size: 14px;
-        }
-        textarea {
-            resize: vertical;
-        }
-        button {
-            background: #2563eb;
-            color: white;
-            border: none;
-            padding: 12px 24px;
-            border-radius: 5px;
-            font-size: 15px;
-            cursor: pointer;
-            width: 100%;
-        }
-        button:hover {
-            background: #1e4fc4;
+            min-height: 100vh;
         }
 
-        /* Responsive : petits écrans (mobile) */
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 50px 20px 80px;
+        }
+
+        h2 {
+            font-family: 'Georgia', serif;
+            font-weight: 400;
+            font-size: 30px;
+            letter-spacing: 1px;
+            margin: 0 0 20px;
+            color: #a9762f;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 28px;
+            color: #a9762f;
+            text-decoration: none;
+            font-family: Arial, sans-serif;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        form {
+            background: #ffffff;
+            border: 1px solid #e7e3da;
+            border-radius: 4px;
+            padding: 30px;
+        }
+
+        .field {
+            margin-bottom: 22px;
+        }
+
+        .field label {
+            display: block;
+            margin-bottom: 8px;
+            font-family: Arial, sans-serif;
+            font-size: 13px;
+            font-weight: bold;
+            color: #6b6355;
+        }
+
+        .field input {
+            width: 100%;
+            padding: 11px 12px;
+            border: 1px solid #e7e3da;
+            border-radius: 4px;
+            background: #ffffff;
+            color: #2b2b2b;
+            font-family: Arial, sans-serif;
+            font-size: 13px;
+            outline: none;
+            transition: border-color 0.2s ease;
+        }
+
+        .field input:focus {
+            border-color: #a9762f;
+        }
+
+        button {
+            width: 100%;
+            padding: 11px 15px;
+            border: none;
+            border-radius: 4px;
+            background: #a9762f;
+            color: #ffffff;
+            font-family: Arial, sans-serif;
+            font-size: 13px;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+
+        button:hover {
+            background: #8f6327;
+        }
+
+        .error-box {
+            margin-bottom: 20px;
+            padding: 14px 16px;
+            background: #faf9f6;
+            border: 1px solid #e7e3da;
+            border-left: 3px solid #a9762f;
+            border-radius: 4px;
+            color: #6b6355;
+            font-size: 13px;
+        }
+
+        .error-box ul {
+            margin: 0;
+            padding-left: 18px;
+        }
+
+        .error-box li {
+            margin-bottom: 4px;
+        }
+
+        .error-box li:last-child {
+            margin-bottom: 0;
+        }
+
+        /* ===== Responsive : petits écrans ===== */
+
         @media (max-width: 600px) {
-            body {
-                margin: 20px auto;
+            .container {
+                padding: 30px 15px 50px;
             }
+
             h2 {
-                font-size: 20px;
+                font-size: 23px;
             }
+
             form {
-                padding: 15px;
+                padding: 20px;
+            }
+
+            .back-link {
+                margin-bottom: 22px;
+                font-size: 12px;
             }
         }
     </style>
 </head>
+
 <body>
 
-    <h2>Add a Category</h2>
+    <div class="container">
+   <a href="{{ route('categories.index') }}" class="back-link">
+            ← Back to list
+        </a>
 
-    <a href="{{ route('categories.index') }}" class="back-link">← Back to list</a>
+        <h2>Add a Category</h2>
 
-    @if ($errors->any())
-        <div class="error-box">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
+     
+        @if ($errors->any())
+            <div class="error-box">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
 
-    <form action="{{ route('categories.store') }}" method="POST" enctype="multipart/form-data">
-        @csrf
+        <form action="{{ route('categories.store') }}" method="POST" enctype="multipart/form-data">
+            @csrf
 
-        <div class="field">
-            <label>Name </label>
-            <input type="text" name="name" value="{{ old('name') }}">
-        </div>
+            <div class="field">
+                <label>Name</label>
+                <input type="text" name="name" value="{{ old('name') }}">
+            </div>
 
-    
+            <button type="submit">
+                Save
+            </button>
 
-        <button type="submit">Save</button>
+        </form>
 
-    </form>
+    </div>
 
 </body>
 </html>
+

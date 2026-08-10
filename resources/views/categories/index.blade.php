@@ -3,39 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Watches List</title>
+    <title>Categories List</title>
     <style>
         * {
             box-sizing: border-box;
         }
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Georgia', serif;
             max-width: 1000px;
             margin: 40px auto;
             padding: 0 15px;
-            color: #333;
+            color: #2b2b2b;
+            background: #faf9f6;
         }
         h2 {
+            font-weight: 400;
+            color: #a9762f;
             margin-bottom: 10px;
         }
         .add-btn {
             display: inline-block;
-            background: #2563eb;
-            color: white;
+            font-family: Arial, sans-serif;
+            background: #a9762f;
+            color: #fff;
             padding: 8px 16px;
-            border-radius: 5px;
+            border-radius: 4px;
             text-decoration: none;
+            font-size: 13px;
+            text-transform: uppercase;
             margin-bottom: 20px;
-        }
-        .add-btn:hover {
-            background: #1e4fc4;
         }
         .success-msg {
-            background: #d1e7dd;
-            color: #0f5132;
+            font-family: Arial, sans-serif;
+            background: #eaf3ea;
+            color: #3a6b3a;
             padding: 10px 15px;
-            border-radius: 5px;
+            border-radius: 4px;
             margin-bottom: 20px;
+            font-size: 14px;
         }
         .table-wrapper {
             width: 100%;
@@ -45,27 +50,32 @@
             width: 100%;
             min-width: 600px;
             border-collapse: collapse;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            background: #fff;
+            border: 1px solid #e7e3da;
         }
         thead {
-            background: #f1f5f9;
+            background: #f5efe4;
+        }
+        th {
+            font-family: Arial, sans-serif;
+            font-weight: bold;
+            font-size: 13px;
+            text-transform: uppercase;
+            color: #a9762f;
         }
         th, td {
             padding: 12px;
             text-align: left;
-            border-bottom: 1px solid #e5e7eb;
+            border-bottom: 1px solid #e7e3da;
+            font-family: Arial, sans-serif;
         }
         tbody tr:hover {
-            background: #f9fafb;
-        }
-        img {
-            border-radius: 6px;
-            object-fit: cover;
+            background: #faf6ee;
         }
         .actions a {
             margin-right: 10px;
             text-decoration: none;
-            color: #2563eb;
+            color: #a9762f;
         }
         .actions form {
             display: inline;
@@ -73,18 +83,26 @@
         .actions button {
             border: none;
             background: none;
-            color: #dc2626;
+            color: #c15b3f;
             cursor: pointer;
             padding: 0;
             font-size: 14px;
         }
         .empty-row {
             text-align: center;
-            color: #6b7280;
+            color: #9b968a;
             padding: 20px;
         }
+         .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #a9762f;
+            text-decoration: none;
+            font-family: Arial, sans-serif;
+            font-size: 13px;
+            text-transform: uppercase;
+        }
 
-        /* Responsive : petits écrans (mobile) */
         @media (max-width: 600px) {
             body {
                 margin: 20px auto;
@@ -104,9 +122,10 @@
     </style>
 </head>
 <body>
-
-    <h2>Categories List </h2>
-
+<a href="{{ route('dashboard') }}" class="back-link">← Back to Dashboard</a>
+   <br>
+    <h2>Categories List</h2>
+   
     <a href="{{ route('categories.create') }}" class="add-btn">+ Add a Category</a>
 
     @if(session('success'))
@@ -128,23 +147,22 @@
                 @forelse($categories as $category)
                     <tr>
                         <td>{{ $category->id }}</td>
-                      
                         <td>{{ $category->name }}</td>
-                     
                         <td class="actions">
-                            
                             <a href="{{ route('categories.show', $category->id) }}">Show</a>
                             <a href="{{ route('categories.edit', $category) }}">Edit</a>
-                            <form action="{{ route('categories.destroy', $category->id) }}" method="POST" onsubmit="return confirm('Delete this category?')">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit">Delete</button>
-                            </form>
+                            @if(auth()->user()->isAdmin())
+                                <form action="{{ route('categories.destroy', $category->id) }}" method="POST" onsubmit="return confirm('Delete this category?')">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit">Delete</button>
+                                </form>
+                            @endif
                         </td>
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="7" class="empty-row">No categories found.</td>
+                        <td colspan="3" class="empty-row">No categories found.</td>
                     </tr>
                 @endforelse
             </tbody>

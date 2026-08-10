@@ -9,10 +9,35 @@ use App\Models\Category;
 class WatchController extends Controller
 {
 
-public function home()
+public function home(Request $request)
 {
-    $watches = Watch::with('category')->latest()->paginate(12);
-    return view('welcome', compact('watches'));
+    $query = Watch::with('category')->latest();
+
+    if ($request->filled('brand')) {
+        $query->where('brand', $request->brand);
+    }
+
+    if ($request->filled('category_id')) {
+        $query->where('category_id', $request->category_id);
+    }
+
+    if ($request->boolean('in_stock')) {
+        $query->where('stock', '>', 0);
+    }
+if ($request->filled('price_min')) {
+    $query->where('price', '>=', $request->price_min);
+}
+
+if ($request->filled('price_max')) {
+    $query->where('price', '<=', $request->price_max);
+}
+    $watches = $query->paginate(12)->withQueryString();
+
+    $categories = Category::orderBy('name')->get();
+    $brands = Watch::select('brand')->distinct()->orderBy('brand')->pluck('brand');
+
+    return view('welcome', compact('watches', 'categories', 'brands'));
+
 }
 
     /**
