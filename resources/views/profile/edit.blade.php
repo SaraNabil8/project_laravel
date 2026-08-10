@@ -1,4 +1,11 @@
-<x-app-layout>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - SN Watches</title>
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+
     <style>
         nav {
             background: #ffffff;
@@ -30,6 +37,7 @@
             font-size: 20px;
             letter-spacing: 1px;
             color: #a9762f;
+            text-decoration: none; 
         }
 
         nav a {
@@ -55,6 +63,7 @@
 
             nav .logo span {
                 font-size: 16px;
+                
             }
 
             nav a {
@@ -63,6 +72,8 @@
             }
         }
     </style>
+</head>
+<body class="font-sans antialiased bg-gray-100">
 
     <nav>
         <div class="nav-inner">
@@ -77,12 +88,6 @@
             </div>
         </div>
     </nav>
-
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Profile') }}
-        </h2>
-    </x-slot>
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
@@ -107,4 +112,6 @@
 
         </div>
     </div>
-</x-app-layout>
+
+</body>
+</html>

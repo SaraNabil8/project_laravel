@@ -7,27 +7,22 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
-public function up(): void
-{
-    Schema::table('watches', function (Blueprint $table) {
-        // Ajouter uniquement la contrainte sur la colonne existante
-        $table->foreign('category_id')
-              ->references('id')
-              ->on('categories')
-              ->nullOnDelete();
-    });
-}
+    public function up(): void
+    {
+        Schema::table('watches', function (Blueprint $table) {
+            if (!Schema::hasColumn('watches', 'category_id')) {
+                $table->foreignId('category_id')
+                      ->nullable()
+                      ->constrained('categories')
+                      ->nullOnDelete();
+            }
+        });
+    }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
-         Schema::table('watches', function (Blueprint $table) {
-            $table->dropConstrainedForeignIdFor(Category::class);
+        Schema::table('watches', function (Blueprint $table) {
+            $table->dropConstrainedForeignId('category_id');
         });
     }
 };
