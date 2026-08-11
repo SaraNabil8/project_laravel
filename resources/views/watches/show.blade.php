@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -175,7 +176,7 @@
             padding: 30px;
         }
 
-        .card > img {
+        .card>img {
             width: 100%;
             max-width: 420px;
             height: 320px;
@@ -342,7 +343,7 @@
                 gap: 2px;
             }
 
-            #menu-toggle:checked ~ .links {
+            #menu-toggle:checked~.links {
                 display: flex;
             }
 
@@ -375,7 +376,7 @@
                 padding: 20px;
             }
 
-            .card > img {
+            .card>img {
                 height: 250px;
                 margin-bottom: 24px;
             }
@@ -423,18 +424,18 @@
 
             <a href="{{ route('home') }}">
                 <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M3 10.5 12 3l9 7.5"/>
-                    <path d="M5 9.5V21h14V9.5"/>
+                    <path d="M3 10.5 12 3l9 7.5" />
+                    <path d="M5 9.5V21h14V9.5" />
                 </svg>
                 <span class="label">Home</span>
             </a>
 
             <a href="{{ route('categories') }}">
                 <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <rect x="3" y="3" width="7" height="7"/>
-                    <rect x="14" y="3" width="7" height="7"/>
-                    <rect x="3" y="14" width="7" height="7"/>
-                    <rect x="14" y="14" width="7" height="7"/>
+                    <rect x="3" y="3" width="7" height="7" />
+                    <rect x="14" y="3" width="7" height="7" />
+                    <rect x="3" y="14" width="7" height="7" />
+                    <rect x="14" y="14" width="7" height="7" />
                 </svg>
                 <span class="label">Categories</span>
             </a>
@@ -445,16 +446,16 @@
 
                     <a href="{{ route('dashboard') }}">
                         <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <rect x="3" y="3" width="18" height="18" rx="2"/>
-                            <path d="M3 9h18M9 21V9"/>
+                            <rect x="3" y="3" width="18" height="18" rx="2" />
+                            <path d="M3 9h18M9 21V9" />
                         </svg>
                         <span class="label">Dashboard</span>
                     </a>
 
                     <a href="{{ route('profile.edit') }}">
                         <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <circle cx="12" cy="8" r="4"/>
-                            <path d="M4 21c0-4 4-6 8-6s8 2 8 6"/>
+                            <circle cx="12" cy="8" r="4" />
+                            <path d="M4 21c0-4 4-6 8-6s8 2 8 6" />
                         </svg>
                         <span class="label">Profile</span>
                     </a>
@@ -462,10 +463,11 @@
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
                         <button type="submit">
-                            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
-                                <path d="M16 17l5-5-5-5"/>
-                                <path d="M21 12H9"/>
+                            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                                <path d="M16 17l5-5-5-5" />
+                                <path d="M21 12H9" />
                             </svg>
                             <span class="label">Log Out</span>
                         </button>
@@ -475,9 +477,9 @@
 
                     <a href="{{ route('login') }}">
                         <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/>
-                            <path d="M10 17l5-5-5-5"/>
-                            <path d="M15 12H3"/>
+                            <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4" />
+                            <path d="M10 17l5-5-5-5" />
+                            <path d="M15 12H3" />
                         </svg>
                         <span class="label">Login</span>
                     </a>
@@ -485,9 +487,9 @@
                     @if (Route::has('register'))
                         <a href="{{ route('register') }}">
                             <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <circle cx="9" cy="7" r="4"/>
-                                <path d="M2 21c0-4 3-6 7-6s7 2 7 6"/>
-                                <path d="M19 8v6M22 11h-6"/>
+                                <circle cx="9" cy="7" r="4" />
+                                <path d="M2 21c0-4 3-6 7-6s7 2 7 6" />
+                                <path d="M19 8v6M22 11h-6" />
                             </svg>
                             <span class="label">Register</span>
                         </a>
@@ -505,20 +507,17 @@
     <div class="main">
 
         <div class="container">
-    <a href="{{ route('watches.index') }}" class="back-link">
+            <a href="{{ route('watches.index') }}" class="back-link">
                 ← Back to list
             </a>
             <h2>Watch Details</h2>
 
-        
+
 
             <div class="card">
 
                 @if($watch->image)
-                    <img
-                        src="{{ asset('storage/' . $watch->image) }}"
-                        alt="{{ $watch->model }}"
-                    >
+                    <img src="{{ asset('storage/' . $watch->image) }}" alt="{{ $watch->model }}">
                 @endif
 
                 <div class="row">
@@ -552,11 +551,8 @@
                         Edit
                     </a>
 
-                    <form
-                        action="{{ route('watches.destroy', $watch->id) }}"
-                        method="POST"
-                        onsubmit="return confirm('Delete this watch?')"
-                    >
+                    <form action="{{ route('watches.destroy', $watch->id) }}" method="POST"
+                        onsubmit="return confirm('Delete this watch?')">
                         @csrf
                         @method('DELETE')
 
@@ -574,5 +570,5 @@
     </div>
 
 </body>
-</html>
 
+</html>

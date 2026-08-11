@@ -123,7 +123,8 @@
             font-size: 12px;
             display: inline-block;
         }
-   .back-link {
+
+        .back-link {
             display: inline-block;
             margin-bottom: 20px;
             color: #a9762f;
@@ -158,8 +159,8 @@
 </head>
 
 <body>
-<a href="{{ route('dashboard') }}" class="back-link">← Back to Dashboard</a>
-   <br>
+    <a href="{{ route('dashboard') }}" class="back-link">← Back to Dashboard</a>
+    <br>
     <h2>Watches List</h2>
 
     <a href="{{ route('watches.create') }}" class="add-btn">+ Add a Watch</a>
@@ -190,8 +191,8 @@
                         <td>{{ $watch->id }}</td>
                         <td>
                             @if ($watch->image)
-                                <img src="{{ asset('storage/' . $watch->image) }}" alt="{{ $watch->model }}"
-                                    width="60" height="60">
+                                <img src="{{ asset('storage/' . $watch->image) }}" alt="{{ $watch->model }}" width="60"
+                                    height="60">
                             @else
                                 —
                             @endif

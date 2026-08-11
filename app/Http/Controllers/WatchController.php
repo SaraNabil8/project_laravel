@@ -59,25 +59,21 @@ public function create()
 
 public function store(Request $request)
 {
-    $request->validate([
+    $validated = $request->validate([
         'model' => 'required|string|max:255',
         'brand' => 'required|string|max:255',
-         'category_id' => 'nullable|exists:categories,id',
-        'price' => 'required|numeric',
-        'stock' => 'required|integer',
+        'category_id' => 'nullable|exists:categories,id',
+        'price' => 'required|numeric|min:0',
+        'stock' => 'required|integer|min:0',
         'description' => 'nullable|string',
-        'image' => 'required|image',
-
+        'image' => 'required|image|max:2048',
     ]);
 
-    $data = $request->all();
-
-   
     if ($request->hasFile('image')) {
-        $data['image'] = $request->file('image')->store('watches', 'public');
+        $validated['image'] = $request->file('image')->store('watches', 'public');
     }
 
-    Watch::create($data);
+    Watch::create($validated);
 
     return redirect()->route('watches.index')
         ->with('success', 'Watch added successfully!');
@@ -100,24 +96,24 @@ public function edit(Watch $watch)
 
 public function update(Request $request, Watch $watch)
 {
-      $categories = Category::all();
-    $request->validate([
+    $validated = $request->validate([
         'model' => 'required|string|max:255',
         'brand' => 'required|string|max:255',
         'price' => 'required|numeric|min:0',
         'stock' => 'required|integer|min:0',
         'description' => 'nullable|string',
         'image' => 'nullable|image|max:2048',
-         'category_id' => 'nullable|exists:categories,id',
+        'category_id' => 'nullable|exists:categories,id',
     ]);
 
-    $data = $request->all();
-
     if ($request->hasFile('image')) {
-        $data['image'] = $request->file('image')->store('watches', 'public');
+        if ($watch->image) {
+            \Storage::disk('public')->delete($watch->image);
+        }
+        $validated['image'] = $request->file('image')->store('watches', 'public');
     }
 
-    $watch->update($data);
+    $watch->update($validated);
 
     return redirect()->route('watches.index')
         ->with('success', 'Watch updated successfully!');
@@ -125,6 +121,10 @@ public function update(Request $request, Watch $watch)
 
 public function destroy(Watch $watch)
 {
+    if ($watch->image) {
+        \Storage::disk('public')->delete($watch->image);
+    }
+
     $watch->delete();
 
     return redirect()->route('watches.index')

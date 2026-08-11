@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -77,6 +78,7 @@
         }
     </style>
 </head>
+
 <body>
 
     <div class="login-wrapper">
@@ -90,7 +92,8 @@
 
                 <div class="field">
                     <label for="email">Email</label>
-                    <input id="email" type="email" name="email" value="{{ old('email', $request->email) }}" required autofocus>
+                    <input id="email" type="email" name="email" value="{{ old('email', $request->email) }}" required
+                        autofocus>
                     @error('email')
                         <div class="field-error">{{ $message }}</div>
                     @enderror
@@ -118,4 +121,5 @@
     </div>
 
 </body>
+
 </html>

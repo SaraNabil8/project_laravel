@@ -1,11 +1,11 @@
-9<?php
+9
+<?php
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('model');
             $table->string('brand');
             $table->text('description')->nullable();
-            $table->decimal('price',10,2);
+            $table->decimal('price', 10, 2);
             $table->integer('stock')->default(0);
             $table->string('image');
             $table->timestamps();

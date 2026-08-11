@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -37,7 +38,7 @@
             font-size: 20px;
             letter-spacing: 1px;
             color: #a9762f;
-            text-decoration: none; 
+            text-decoration: none;
         }
 
         nav a {
@@ -63,7 +64,7 @@
 
             nav .logo span {
                 font-size: 16px;
-                
+
             }
 
             nav a {
@@ -73,6 +74,7 @@
         }
     </style>
 </head>
+
 <body class="font-sans antialiased bg-gray-100">
 
     <nav>
@@ -114,4 +116,5 @@
     </div>
 
 </body>
+
 </html>

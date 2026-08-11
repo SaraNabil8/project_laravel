@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -170,12 +171,12 @@
 <body>
 
     <div class="container">
- <a href="{{ route('watches.index') }}" class="back-link">
+        <a href="{{ route('watches.index') }}" class="back-link">
             ← Back to list
         </a>
         <h2>Add a Watch</h2>
 
-       
+
 
         @if ($errors->any())
             <div class="error-box">
@@ -206,6 +207,16 @@
             </div>
 
             <div class="field">
+                <label>Price</label>
+                <input type="number" step="0.01" min="0" name="price" value="{{ old('price') }}">
+            </div>
+
+            <div class="field">
+                <label>Stock</label>
+                <input type="number" min="0" name="stock" value="{{ old('stock') }}">
+            </div>
+
+            <div class="field">
                 <label>Category</label>
                 <select name="category_id" id="category_id">
                     <option value="">Please choose your category</option>
@@ -233,5 +244,5 @@
     </div>
 
 </body>
-</html>
 
+</html>

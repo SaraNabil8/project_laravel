@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -194,13 +195,13 @@
 <body>
 
     <div class="container">
-  <a href="{{ route('watches.index') }}" class="back-link">
+        <a href="{{ route('watches.index') }}" class="back-link">
             ← Back to list
         </a>
 
         <h2>Edit Watch</h2>
 
-      
+
         @if ($errors->any())
             <div class="error-box">
                 <ul>
@@ -261,10 +262,7 @@
                     <div class="current-image">
                         <label>Current Image</label>
 
-                        <img
-                            src="{{ asset('storage/' . $watch->image) }}"
-                            alt="{{ $watch->model }}"
-                        >
+                        <img src="{{ asset('storage/' . $watch->image) }}" alt="{{ $watch->model }}">
                     </div>
                 @endif
 
@@ -282,5 +280,5 @@
     </div>
 
 </body>
-</html>
 
+</html>

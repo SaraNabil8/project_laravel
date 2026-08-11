@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,6 +9,7 @@
         * {
             box-sizing: border-box;
         }
+
         body {
             font-family: 'Georgia', serif;
             max-width: 1000px;
@@ -16,11 +18,13 @@
             color: #2b2b2b;
             background: #faf9f6;
         }
+
         h2 {
             font-weight: 400;
             color: #a9762f;
             margin-bottom: 10px;
         }
+
         .add-btn {
             display: inline-block;
             font-family: Arial, sans-serif;
@@ -33,6 +37,7 @@
             text-transform: uppercase;
             margin-bottom: 20px;
         }
+
         .success-msg {
             font-family: Arial, sans-serif;
             background: #eaf3ea;
@@ -42,10 +47,12 @@
             margin-bottom: 20px;
             font-size: 14px;
         }
+
         .table-wrapper {
             width: 100%;
             overflow-x: auto;
         }
+
         table {
             width: 100%;
             min-width: 600px;
@@ -53,9 +60,11 @@
             background: #fff;
             border: 1px solid #e7e3da;
         }
+
         thead {
             background: #f5efe4;
         }
+
         th {
             font-family: Arial, sans-serif;
             font-weight: bold;
@@ -63,23 +72,29 @@
             text-transform: uppercase;
             color: #a9762f;
         }
-        th, td {
+
+        th,
+        td {
             padding: 12px;
             text-align: left;
             border-bottom: 1px solid #e7e3da;
             font-family: Arial, sans-serif;
         }
+
         tbody tr:hover {
             background: #faf6ee;
         }
+
         .actions a {
             margin-right: 10px;
             text-decoration: none;
             color: #a9762f;
         }
+
         .actions form {
             display: inline;
         }
+
         .actions button {
             border: none;
             background: none;
@@ -88,12 +103,14 @@
             padding: 0;
             font-size: 14px;
         }
+
         .empty-row {
             text-align: center;
             color: #9b968a;
             padding: 20px;
         }
-         .back-link {
+
+        .back-link {
             display: inline-block;
             margin-bottom: 20px;
             color: #a9762f;
@@ -107,25 +124,30 @@
             body {
                 margin: 20px auto;
             }
+
             h2 {
                 font-size: 20px;
             }
+
             .add-btn {
                 display: block;
                 text-align: center;
             }
-            th, td {
+
+            th,
+            td {
                 padding: 8px;
                 font-size: 14px;
             }
         }
     </style>
 </head>
+
 <body>
-<a href="{{ route('dashboard') }}" class="back-link">← Back to Dashboard</a>
-   <br>
+    <a href="{{ route('dashboard') }}" class="back-link">← Back to Dashboard</a>
+    <br>
     <h2>Categories List</h2>
-   
+
     <a href="{{ route('categories.create') }}" class="add-btn">+ Add a Category</a>
 
     @if(session('success'))
@@ -152,7 +174,8 @@
                             <a href="{{ route('categories.show', $category->id) }}">Show</a>
                             <a href="{{ route('categories.edit', $category) }}">Edit</a>
                             @if(auth()->user()->isAdmin())
-                                <form action="{{ route('categories.destroy', $category->id) }}" method="POST" onsubmit="return confirm('Delete this category?')">
+                                <form action="{{ route('categories.destroy', $category->id) }}" method="POST"
+                                    onsubmit="return confirm('Delete this category?')">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit">Delete</button>
@@ -170,4 +193,5 @@
     </div>
 
 </body>
+
 </html>
