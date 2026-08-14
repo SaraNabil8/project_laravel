@@ -465,7 +465,7 @@
                             <div class="card-body">
                                 <div class="brand">{{ $watch->brand }}</div>
                                 <h3 class="model">{{ $watch->model }}</h3>
-                                <p class="desc">{{ Str::limit($watch->description, 60) }}</p>
+                                <p class="desc">{{ $watch->description }}</p>
                                 <div class="price">{{ $watch->price }} DH</div>
                                 <div class="stock {{ $watch->stock <= 2 ? 'low' : '' }}">
                                     {{ $watch->stock }} in stock
