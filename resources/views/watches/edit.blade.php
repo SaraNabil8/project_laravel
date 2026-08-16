@@ -5,246 +5,71 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Watch - SN Watches</title>
-
-    <style>
-        * {
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: Arial, sans-serif;
-            background: #faf9f6;
-            color: #2b2b2b;
-            margin: 0;
-            min-height: 100vh;
-        }
-
-        .container {
-            max-width: 700px;
-            margin: 0 auto;
-            padding: 50px 20px 80px;
-        }
-
-        h2 {
-            font-family: 'Georgia', serif;
-            font-weight: 400;
-            font-size: 30px;
-            letter-spacing: 1px;
-            margin: 0 0 20px;
-            color: #a9762f;
-        }
-
-        .back-link {
-            display: inline-block;
-            margin-bottom: 28px;
-            color: #a9762f;
-            text-decoration: none;
-            font-family: Arial, sans-serif;
-            font-size: 13px;
-            text-transform: uppercase;
-            letter-spacing: 0.3px;
-        }
-
-        .back-link:hover {
-            text-decoration: underline;
-        }
-
-        form {
-            background: #ffffff;
-            border: 1px solid #e7e3da;
-            border-radius: 4px;
-            padding: 30px;
-        }
-
-        .field {
-            margin-bottom: 22px;
-        }
-
-        .field label {
-            display: block;
-            margin-bottom: 8px;
-            font-family: Arial, sans-serif;
-            font-size: 13px;
-            font-weight: bold;
-            color: #6b6355;
-        }
-
-        .field input,
-        .field textarea,
-        .field select {
-            width: 100%;
-            padding: 11px 12px;
-            border: 1px solid #e7e3da;
-            border-radius: 4px;
-            background: #ffffff;
-            color: #2b2b2b;
-            font-family: Arial, sans-serif;
-            font-size: 13px;
-            outline: none;
-            transition: border-color 0.2s ease;
-        }
-
-        .field input:focus,
-        .field textarea:focus,
-        .field select:focus {
-            border-color: #a9762f;
-        }
-
-        .field textarea {
-            resize: vertical;
-            min-height: 100px;
-        }
-
-        .field select {
-            cursor: pointer;
-        }
-
-        .field input[type="file"] {
-            padding: 9px 10px;
-            cursor: pointer;
-        }
-
-        /* ===== Current Image ===== */
-
-        .current-image {
-            margin-bottom: 20px;
-        }
-
-        .current-image label {
-            margin-bottom: 10px;
-        }
-
-        .current-image img {
-            display: block;
-            width: 140px;
-            height: 140px;
-            object-fit: cover;
-            border-radius: 4px;
-            border: 1px solid #e7e3da;
-        }
-
-        button {
-            width: 100%;
-            padding: 11px 15px;
-            border: none;
-            border-radius: 4px;
-            background: #a9762f;
-            color: #ffffff;
-            font-family: Arial, sans-serif;
-            font-size: 13px;
-            cursor: pointer;
-            transition: background 0.2s ease;
-        }
-
-        button:hover {
-            background: #8f6327;
-        }
-
-        .error-box {
-            margin-bottom: 20px;
-            padding: 14px 16px;
-            background: #faf9f6;
-            border: 1px solid #e7e3da;
-            border-left: 3px solid #a9762f;
-            border-radius: 4px;
-            color: #6b6355;
-            font-size: 13px;
-        }
-
-        .error-box ul {
-            margin: 0;
-            padding-left: 18px;
-        }
-
-        .error-box li {
-            margin-bottom: 4px;
-        }
-
-        .error-box li:last-child {
-            margin-bottom: 0;
-        }
-
-        /* ===== Responsive ===== */
-
-        @media (max-width: 600px) {
-            .container {
-                padding: 30px 15px 50px;
-            }
-
-            h2 {
-                font-size: 23px;
-            }
-
-            form {
-                padding: 20px;
-            }
-
-            .back-link {
-                margin-bottom: 22px;
-                font-size: 12px;
-            }
-
-            .current-image img {
-                width: 120px;
-                height: 120px;
-            }
-        }
-    </style>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body>
+<body class="font-sans bg-[#faf9f6] text-[#2b2b2b] m-0 min-h-screen">
 
-    <div class="container">
-        <a href="{{ route('watches.index') }}" class="back-link">
+    <div class="max-w-[700px] mx-auto pt-[50px] px-5 pb-20 max-[600px]:pt-[30px] max-[600px]:px-[15px] max-[600px]:pb-[50px]">
+
+        <a href="{{ route('watches.index') }}"
+            class="inline-block mb-7 text-[#a9762f] no-underline text-[13px] uppercase tracking-wide hover:underline max-[600px]:mb-[22px] max-[600px]:text-xs">
             ← Back to list
         </a>
 
-        <h2>Edit Watch</h2>
-
+        <h2 class="font-['Georgia',serif] font-normal text-[30px] tracking-wide mb-5 text-[#a9762f] max-[600px]:text-[23px]">
+            Edit Watch</h2>
 
         @if ($errors->any())
-            <div class="error-box">
-                <ul>
+            <div class="mb-5 py-3.5 px-4 bg-[#faf9f6] border border-[#e7e3da] border-l-[3px] border-l-[#a9762f] rounded text-[#6b6355] text-[13px]">
+                <ul class="m-0 pl-[18px] list-disc">
                     @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
+                        <li class="mb-1 last:mb-0">{{ $error }}</li>
                     @endforeach
                 </ul>
             </div>
         @endif
 
-        <form action="{{ route('watches.update', $watch->id) }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('watches.update', $watch->id) }}" method="POST" enctype="multipart/form-data"
+            class="bg-white border border-[#e7e3da] rounded p-[30px] max-[600px]:p-5">
             @csrf
             @method('PUT')
 
-            <div class="field">
-                <label>Model</label>
-                <input type="text" name="model" value="{{ old('model', $watch->model) }}">
+            <div class="mb-[22px]">
+                <label class="block mb-2 text-[13px] font-bold text-[#6b6355]">Model</label>
+                <input type="text" name="model" value="{{ old('model', $watch->model) }}"
+                    class="w-full py-2.5 px-3 border border-[#e7e3da] rounded bg-white text-[#2b2b2b] text-[13px] outline-none transition-colors focus:border-[#a9762f]">
             </div>
 
-            <div class="field">
-                <label>Brand</label>
-                <input type="text" name="brand" value="{{ old('brand', $watch->brand) }}">
+            <div class="mb-[22px]">
+                <label class="block mb-2 text-[13px] font-bold text-[#6b6355]">Brand</label>
+                <input type="text" name="brand" value="{{ old('brand', $watch->brand) }}"
+                    class="w-full py-2.5 px-3 border border-[#e7e3da] rounded bg-white text-[#2b2b2b] text-[13px] outline-none transition-colors focus:border-[#a9762f]">
             </div>
 
-            <div class="field">
-                <label>Price</label>
-                <input type="number" step="0.01" min="0" name="price" value="{{ old('price', $watch->price) }}">
+            <div class="mb-[22px]">
+                <label class="block mb-2 text-[13px] font-bold text-[#6b6355]">Price</label>
+                <input type="number" step="0.01" min="0" name="price" value="{{ old('price', $watch->price) }}"
+                    class="w-full py-2.5 px-3 border border-[#e7e3da] rounded bg-white text-[#2b2b2b] text-[13px] outline-none transition-colors focus:border-[#a9762f]">
             </div>
 
-            <div class="field">
-                <label>Stock</label>
-                <input type="number" min="0" name="stock" value="{{ old('stock', $watch->stock) }}">
+            <div class="mb-[22px]">
+                <label class="block mb-2 text-[13px] font-bold text-[#6b6355]">Stock</label>
+                <input type="number" min="0" name="stock" value="{{ old('stock', $watch->stock) }}"
+                    class="w-full py-2.5 px-3 border border-[#e7e3da] rounded bg-white text-[#2b2b2b] text-[13px] outline-none transition-colors focus:border-[#a9762f]">
             </div>
 
-            <div class="field">
-                <label>Description</label>
-                <textarea name="description" rows="4">{{ old('description', $watch->description) }}</textarea>
+            <div class="mb-[22px]">
+                <label class="block mb-2 text-[13px] font-bold text-[#6b6355]">Description</label>
+                <textarea name="description" rows="4"
+                    class="w-full py-2.5 px-3 border border-[#e7e3da] rounded bg-white text-[#2b2b2b] text-[13px] outline-none transition-colors focus:border-[#a9762f] resize-y min-h-[100px]">{{ old('description', $watch->description) }}</textarea>
             </div>
 
-            <div class="field">
-                <label>Category</label>
+            <div class="mb-[22px]">
+                <label class="block mb-2 text-[13px] font-bold text-[#6b6355]">Category</label>
 
-                <select name="category_id" id="category_id">
+                <select name="category_id" id="category_id"
+                    class="w-full py-2.5 px-3 border border-[#e7e3da] rounded bg-white text-[#2b2b2b] text-[13px] outline-none transition-colors focus:border-[#a9762f] cursor-pointer">
                     <option value="">Please choose your category</option>
 
                     @foreach ($categories as $category)
@@ -256,22 +81,25 @@
                 </select>
             </div>
 
-            <div class="field">
+            <div class="mb-[22px]">
 
-                @if($watch->image)
-                    <div class="current-image">
-                        <label>Current Image</label>
+                @if ($watch->image)
+                    <div class="mb-5">
+                        <label class="block mb-2.5 text-[13px] font-bold text-[#6b6355]">Current Image</label>
 
-                        <img src="{{ asset('storage/' . $watch->image) }}" alt="{{ $watch->model }}">
+                        <img src="{{ asset('storage/' . $watch->image) }}" alt="{{ $watch->model }}"
+                            class="block w-[140px] h-[140px] object-cover rounded border border-[#e7e3da] max-[600px]:w-[120px] max-[600px]:h-[120px]">
                     </div>
                 @endif
 
-                <label>Change Image (optional)</label>
-                <input type="file" name="image">
+                <label class="block mb-2 text-[13px] font-bold text-[#6b6355]">Change Image (optional)</label>
+                <input type="file" name="image"
+                    class="w-full py-[9px] px-2.5 border border-[#e7e3da] rounded bg-white text-[#2b2b2b] text-[13px] outline-none cursor-pointer">
 
             </div>
 
-            <button type="submit">
+            <button type="submit"
+                class="w-full py-2.5 px-[15px] border-none rounded bg-[#a9762f] text-white text-[13px] cursor-pointer transition-colors hover:bg-[#8f6327]">
                 Update
             </button>
 

@@ -5,177 +5,63 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - SN Watches</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            background: #faf9f6;
-            color: #2b2b2b;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .login-wrapper {
-            width: 100%;
-            max-width: 380px;
-            padding: 20px;
-        }
-
-        .logo {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        .logo img {
-            height: 60px;
-        }
-
-        .logo span {
-            display: block;
-            font-family: 'Georgia', serif;
-            font-size: 20px;
-            letter-spacing: 1px;
-            color: #a9762f;
-            margin-top: -5px;
-        }
-
-        .card {
-            background: #ffffff;
-            border: 1px solid #e7e3da;
-            border-radius: 6px;
-            padding: 30px;
-        }
-
-        .card h1 {
-            font-family: 'Georgia', serif;
-            font-weight: 400;
-            font-size: 22px;
-            color: #a9762f;
-            text-align: center;
-            margin: 0 0 20px;
-        }
-
-        .field {
-            margin-bottom: 16px;
-        }
-
-        .field label {
-            display: block;
-            font-size: 12px;
-            text-transform: uppercase;
-            color: #6b6b6b;
-            margin-bottom: 5px;
-        }
-
-        .field input {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #d9d4c8;
-            border-radius: 4px;
-            font-size: 14px;
-        }
-
-        .field-error {
-            color: #c15b3f;
-            font-size: 12px;
-            margin-top: 5px;
-        }
-
-        .remember-row {
-            margin-bottom: 20px;
-            font-size: 13px;
-            color: #6b6b6b;
-        }
-
-        .actions {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .forgot-link {
-            font-size: 13px;
-            color: #6b6b6b;
-        }
-
-        .btn-login {
-            background: #a9762f;
-            color: #ffffff;
-            border: none;
-            padding: 10px 22px;
-            border-radius: 4px;
-            font-size: 13px;
-            text-transform: uppercase;
-            cursor: pointer;
-        }
-
-        .register-note {
-            text-align: center;
-            font-size: 13px;
-            color: #8a8676;
-            margin-top: 18px;
-        }
-
-        .register-note a {
-            color: #a9762f;
-            font-weight: bold;
-            text-decoration: none;
-        }
-    </style>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body>
+<body class="font-sans m-0 bg-[#faf9f6] text-[#2b2b2b] min-h-screen flex items-center justify-center">
 
-    <div class="login-wrapper">
+    <div class="w-full max-w-[380px] p-5">
 
-        <div class="card">
-            <h1>Welcome back</h1>
+        <div class="bg-white border border-[#e7e3da] rounded-md p-[30px]">
+            <h1 class="font-['Georgia',serif] font-normal text-[22px] text-[#a9762f] text-center mb-5">Welcome back</h1>
 
             @if (session('status'))
-                <div class="field-error" style="color:#3a6b3a;">{{ session('status') }}</div>
+                <div class="text-[#3a6b3a] text-xs mt-1 mb-4 text-center">{{ session('status') }}</div>
             @endif
 
             <form method="POST" action="{{ route('login') }}">
                 @csrf
 
-                <div class="field">
-                    <label for="email">Email</label>
-                    <input id="email" type="email" name="email" value="{{ old('email') }}" required autofocus>
+                <div class="mb-4">
+                    <label for="email" class="block text-xs uppercase text-[#6b6b6b] mb-1.5">Email</label>
+                    <input id="email" type="email" name="email" value="{{ old('email') }}" required autofocus
+                        class="w-full py-2.5 px-2.5 border border-[#d9d4c8] rounded text-sm">
                     @error('email')
-                        <div class="field-error">{{ $message }}</div>
+                        <div class="text-[#c15b3f] text-xs mt-1">{{ $message }}</div>
                     @enderror
                 </div>
 
-                <div class="field">
-                    <label for="password">Password</label>
-                    <input id="password" type="password" name="password" required>
+                <div class="mb-4">
+                    <label for="password" class="block text-xs uppercase text-[#6b6b6b] mb-1.5">Password</label>
+                    <input id="password" type="password" name="password" required
+                        class="w-full py-2.5 px-2.5 border border-[#d9d4c8] rounded text-sm">
                     @error('password')
-                        <div class="field-error">{{ $message }}</div>
+                        <div class="text-[#c15b3f] text-xs mt-1">{{ $message }}</div>
                     @enderror
                 </div>
 
-                <div class="remember-row">
+                <div class="mb-5 text-[13px] text-[#6b6b6b]">
                     <input type="checkbox" id="remember_me" name="remember">
                     <label for="remember_me">Remember me</label>
                 </div>
 
-                <div class="actions">
+                <div class="flex items-center justify-between">
                     @if (Route::has('password.request'))
-                        <a class="forgot-link" href="{{ route('password.request') }}">Forgot your password?</a>
+                        <a class="text-[13px] text-[#6b6b6b]" href="{{ route('password.request') }}">Forgot your password?</a>
                     @else
                         <span></span>
                     @endif
 
-                    <button type="submit" class="btn-login">Log in</button>
+                    <button type="submit"
+                        class="bg-[#a9762f] text-white border-none py-2.5 px-[22px] rounded text-[13px] uppercase cursor-pointer">Log
+                        in</button>
                 </div>
             </form>
         </div>
 
         @if (Route::has('register'))
-            <div class="register-note">
-                Don't have an account? <a href="{{ route('register') }}">Register</a>
+            <div class="text-center text-[13px] text-[#8a8676] mt-[18px]">
+                Don't have an account? <a href="{{ route('register') }}" class="text-[#a9762f] font-bold no-underline">Register</a>
             </div>
         @endif
 

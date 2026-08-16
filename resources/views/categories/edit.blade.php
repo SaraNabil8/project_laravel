@@ -1,184 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Category - SN Watches</title>
-
-    <style>
-        * {
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: Arial, sans-serif;
-            background: #faf9f6;
-            color: #2b2b2b;
-            margin: 0;
-            min-height: 100vh;
-        }
-
-        .container {
-            max-width: 700px;
-            margin: 0 auto;
-            padding: 50px 20px 80px;
-        }
-
-        h2 {
-            font-family: 'Georgia', serif;
-            font-weight: 400;
-            font-size: 30px;
-            letter-spacing: 1px;
-            margin: 0 0 20px;
-            color: #a9762f;
-        }
-
-        .back-link {
-            display: inline-block;
-            margin-bottom: 28px;
-            color: #a9762f;
-            text-decoration: none;
-            font-family: Arial, sans-serif;
-            font-size: 13px;
-            text-transform: uppercase;
-            letter-spacing: 0.3px;
-        }
-
-        .back-link:hover {
-            text-decoration: underline;
-        }
-
-        form {
-            background: #ffffff;
-            border: 1px solid #e7e3da;
-            border-radius: 4px;
-            padding: 30px;
-        }
-
-        .field {
-            margin-bottom: 22px;
-        }
-
-        .field label {
-            display: block;
-            margin-bottom: 8px;
-            font-family: Arial, sans-serif;
-            font-size: 13px;
-            font-weight: bold;
-            color: #6b6355;
-        }
-
-        .field input {
-            width: 100%;
-            padding: 11px 12px;
-            border: 1px solid #e7e3da;
-            border-radius: 4px;
-            background: #ffffff;
-            color: #2b2b2b;
-            font-family: Arial, sans-serif;
-            font-size: 13px;
-            outline: none;
-            transition: border-color 0.2s ease;
-        }
-
-        .field input:focus {
-            border-color: #a9762f;
-        }
-
-        button {
-            width: 100%;
-            padding: 11px 15px;
-            border: none;
-            border-radius: 4px;
-            background: #a9762f;
-            color: #ffffff;
-            font-family: Arial, sans-serif;
-            font-size: 13px;
-            cursor: pointer;
-            transition: background 0.2s ease;
-        }
-
-        button:hover {
-            background: #8f6327;
-        }
-
-        .error-box {
-            margin-bottom: 20px;
-            padding: 14px 16px;
-            background: #faf9f6;
-            border: 1px solid #e7e3da;
-            border-left: 3px solid #a9762f;
-            border-radius: 4px;
-            color: #6b6355;
-            font-size: 13px;
-        }
-
-        .error-box ul {
-            margin: 0;
-            padding-left: 18px;
-        }
-
-        .error-box li {
-            margin-bottom: 4px;
-        }
-
-        .error-box li:last-child {
-            margin-bottom: 0;
-        }
-
-        /* ===== Responsive : petits écrans ===== */
-
-        @media (max-width: 600px) {
-            .container {
-                padding: 30px 15px 50px;
-            }
-
-            h2 {
-                font-size: 23px;
-            }
-
-            form {
-                padding: 20px;
-            }
-
-            .back-link {
-                margin-bottom: 22px;
-                font-size: 12px;
-            }
-        }
-    </style>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body>
+<body class="font-sans bg-[#faf9f6] text-[#2b2b2b] m-0 min-h-screen">
 
-    <div class="container">
-  <a href="{{ route('categories.index') }}" class="back-link">
+    <div class="max-w-[700px] mx-auto pt-[50px] px-5 pb-20 max-[600px]:pt-[30px] max-[600px]:px-[15px] max-[600px]:pb-[50px]">
+
+        <a href="{{ route('categories.index') }}"
+            class="inline-block mb-7 text-[#a9762f] no-underline text-[13px] uppercase tracking-wide hover:underline max-[600px]:mb-[22px] max-[600px]:text-xs">
             ← Back to list
         </a>
-        <h2>Edit Category</h2>
 
-      
+        <h2 class="font-['Georgia',serif] font-normal text-[30px] tracking-wide mb-5 text-[#a9762f] max-[600px]:text-[23px]">
+            Edit Category</h2>
 
         @if ($errors->any())
-            <div class="error-box">
-                <ul>
+            <div class="mb-5 py-3.5 px-4 bg-[#faf9f6] border border-[#e7e3da] border-l-[3px] border-l-[#a9762f] rounded text-[#6b6355] text-[13px]">
+                <ul class="m-0 pl-[18px] list-disc">
                     @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
+                        <li class="mb-1 last:mb-0">{{ $error }}</li>
                     @endforeach
                 </ul>
             </div>
         @endif
 
-        <form action="{{ route('categories.update', $category->id) }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('categories.update', $category->id) }}" method="POST" enctype="multipart/form-data"
+            class="bg-white border border-[#e7e3da] rounded p-[30px] max-[600px]:p-5">
             @csrf
             @method('PUT')
 
-            <div class="field">
-                <label>Name</label>
-                <input type="text" name="name" value="{{ old('name', $category->name) }}">
+            <div class="mb-[22px]">
+                <label class="block mb-2 text-[13px] font-bold text-[#6b6355]">Name</label>
+                <input type="text" name="name" value="{{ old('name', $category->name) }}"
+                    class="w-full py-2.5 px-3 border border-[#e7e3da] rounded bg-white text-[#2b2b2b] text-[13px] outline-none transition-colors focus:border-[#a9762f]">
             </div>
 
-            <button type="submit">
+            <button type="submit"
+                class="w-full py-2.5 px-[15px] border-none rounded bg-[#a9762f] text-white text-[13px] cursor-pointer transition-colors hover:bg-[#8f6327]">
                 Update
             </button>
 
@@ -187,5 +51,5 @@
     </div>
 
 </body>
-</html>
 
+</html>

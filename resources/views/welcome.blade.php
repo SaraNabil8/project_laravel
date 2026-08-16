@@ -5,433 +5,141 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SN Watches</title>
-    <style>
-        * {
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: Arial, sans-serif;
-            background: #faf9f6;
-            color: #2b2b2b;
-            margin: 0;
-            display: flex;
-            min-height: 100vh;
-        }
-
-        /* ===== Sidebar ===== */
-        nav {
-            background: #ffffff;
-            width: 210px;
-            flex-shrink: 0;
-            min-height: 100vh;
-            padding: 20px 14px;
-            display: flex;
-            flex-direction: column;
-            border-right: 1px solid #e7e3da;
-            position: sticky;
-            top: 0;
-            align-self: flex-start;
-            z-index: 1000;
-            transition: width 0.2s ease;
-        }
-
-        nav .logo {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 4px;
-            text-decoration: none;
-            margin-bottom: 26px;
-            padding: 10px 6px;
-            line-height: 1;
-        }
-
-        nav .logo img {
-            height: 115px;
-            width: 115px;
-            object-fit: contain;
-            flex-shrink: 0;
-            display: block;
-        }
-
-        nav .logo span {
-            font-family: 'Georgia', serif;
-            font-size: 15px;
-            letter-spacing: 0.6px;
-            color: #a9762f;
-            white-space: nowrap;
-            line-height: 1;
-        }
-
-        nav .links {
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-        }
-
-        nav a,
-        nav button {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            width: 100%;
-            text-align: left;
-            text-decoration: none;
-            color: #6b6355;
-            background: none;
-            border: none;
-            cursor: pointer;
-            font-size: 13px;
-            letter-spacing: 0.3px;
-            padding: 10px 10px;
-            border-radius: 5px;
-        }
-
-        nav a svg,
-        nav button svg {
-            width: 17px;
-            height: 17px;
-            flex-shrink: 0;
-            stroke: currentColor;
-        }
-
-        nav a:hover,
-        nav button:hover {
-            background: #f5f0e6;
-            color: #a9762f;
-        }
-
-        nav a.active {
-            background: #a9762f;
-            color: #ffffff;
-        }
-
-        /* Menu toggle (mobile) - CSS only, checkbox hack */
-        #menu-toggle {
-            display: none;
-        }
-
-        .menu-label {
-            display: none;
-            font-size: 24px;
-            color: #a9762f;
-            cursor: pointer;
-            user-select: none;
-            line-height: 1;
-            padding: 6px;
-        }
-
-        /* ===== Main content ===== */
-        .main {
-            flex: 1;
-            min-width: 0;
-        }
-
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 40px 20px;
-        }
-
-        h1 {
-            font-family: 'Georgia', serif;
-            font-weight: 400;
-            color: #a9762f;
-            margin: 0 0 20px;
-        }
-
-        .filters {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 25px;
-            flex-wrap: wrap;
-        }
-
-        .filters select,
-        .filters input {
-            padding: 6px 10px;
-            border: 1px solid #d9d4c8;
-            border-radius: 4px;
-            font-size: 13px;
-        }
-
-        .filters button {
-            background: #a9762f;
-            color: #fff;
-            border: none;
-            padding: 6px 14px;
-            cursor: pointer;
-            border-radius: 4px;
-        }
-
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-        }
-
-        .card {
-            background: #ffffff;
-            border: 1px solid #e7e3da;
-            border-radius: 4px;
-            overflow: hidden;
-        }
-
-        .card img {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-        }
-
-        .card-body {
-            padding: 15px;
-        }
-
-        .brand {
-            color: #a9762f;
-            font-size: 11px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .model {
-            font-family: 'Georgia', serif;
-            font-weight: 400;
-            margin: 5px 0;
-            color: #1f1f1f;
-        }
-
-        .desc {
-            color: #7a766c;
-            font-size: 13px;
-        }
-
-        .price {
-            font-family: 'Georgia', serif;
-            font-size: 18px;
-            color: #1f1f1f;
-            margin-top: 10px;
-        }
-
-        .stock {
-            color: #8a8676;
-            font-size: 12px;
-        }
-
-        .stock.low {
-            color: #c15b3f;
-        }
-
-        /* ===== Responsive ===== */
-
-        /* Tablet: shrink sidebar to icons only */
-        @media (max-width: 900px) {
-            .grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            nav {
-                width: 64px;
-                padding: 16px 8px;
-                align-items: center;
-            }
-
-            nav .logo {
-                padding: 6px 0;
-                margin-bottom: 20px;
-            }
-
-            nav .logo span {
-                display: none;
-            }
-
-            nav .logo img {
-                height: 38px;
-                width: 38px;
-            }
-
-            nav a,
-            nav button {
-                justify-content: center;
-                padding: 12px 0;
-            }
-
-            nav a span.label,
-            nav button span.label {
-                display: none;
-            }
-        }
-
-        /* Mobile: collapse to top bar + dropdown */
-        @media (max-width: 600px) {
-            body {
-                display: block;
-            }
-
-            nav {
-                width: auto;
-                min-height: auto;
-                position: sticky;
-                top: 0;
-                flex-direction: row;
-                align-items: center;
-                justify-content: space-between;
-                padding: 10px 14px;
-                border-right: none;
-                border-bottom: 1px solid #e7e3da;
-            }
-
-            nav .logo {
-                flex-direction: row;
-                margin-bottom: 0;
-                padding: 0;
-                gap: 8px;
-            }
-
-            nav .logo img {
-                height: 40px;
-                width: 40px;
-            }
-
-            nav .logo span {
-                display: inline;
-                font-size: 15px;
-            }
-
-            .menu-label {
-                display: block;
-            }
-
-            nav .links {
-                display: none;
-                position: absolute;
-                top: 100%;
-                right: 0;
-                left: 0;
-                background: #ffffff;
-                border-bottom: 1px solid #e7e3da;
-                flex-direction: column;
-                padding: 8px 12px 14px;
-                gap: 2px;
-            }
-
-            #menu-toggle:checked~.links {
-                display: flex;
-            }
-
-            nav a,
-            nav button {
-                padding: 10px 8px;
-            }
-
-            nav a span.label,
-            nav button span.label {
-                display: inline;
-            }
-
-            .container {
-                padding: 24px 15px;
-            }
-
-            h1 {
-                font-size: 22px;
-            }
-
-            .grid {
-                grid-template-columns: 1fr;
-            }
-
-            .card img {
-                height: 220px;
-            }
-        }
-    </style>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body>
+<body class="font-sans bg-[#faf9f6] text-[#2b2b2b] m-0 flex min-h-screen max-[600px]:block">
 
-    <nav>
-        <a href="{{ route('home') }}" class="logo">
-            <img src="{{ asset('logo.png') }}" alt="SN Watches Logo">
-            <span>SN WATCHES</span>
+    <!-- ===== Sidebar ===== -->
+    <nav class="bg-white w-[210px] shrink-0 min-h-screen py-5 px-3.5 flex flex-col border-r border-[#e7e3da] sticky top-0 self-start z-[1000] transition-[width] duration-200
+                max-[900px]:w-16 max-[900px]:px-2 max-[900px]:py-4 max-[900px]:items-center
+                max-[600px]:w-auto max-[600px]:min-h-0 max-[600px]:flex-row max-[600px]:items-center max-[600px]:justify-between max-[600px]:py-2.5 max-[600px]:px-3.5 max-[600px]:border-r-0 max-[600px]:border-b max-[600px]:border-[#e7e3da]">
+
+        <a href="{{ route('home') }}"
+            class="flex flex-col items-center gap-1 no-underline mb-6 py-2.5 px-1.5 leading-none
+                   max-[900px]:py-1.5 max-[900px]:px-0 max-[900px]:mb-5
+                   max-[600px]:flex-row max-[600px]:mb-0 max-[600px]:p-0 max-[600px]:gap-2">
+            <img src="{{ asset('logo.png') }}" alt="SN Watches Logo"
+                class="h-[115px] w-[115px] object-contain shrink-0 block
+                       max-[900px]:h-[38px] max-[900px]:w-[38px]
+                       max-[600px]:h-10 max-[600px]:w-10">
+            <span class="font-['Georgia',serif] text-[15px] tracking-wide text-[#a9762f] whitespace-nowrap leading-none
+                         max-[900px]:hidden
+                         max-[600px]:inline max-[600px]:text-[15px]">SN WATCHES</span>
         </a>
 
-        <input type="checkbox" id="menu-toggle">
-        <label for="menu-toggle" class="menu-label">☰</label>
+        <input type="checkbox" id="menu-toggle" class="hidden peer">
+        <label for="menu-toggle"
+            class="hidden text-2xl text-[#a9762f] cursor-pointer select-none leading-none p-1.5 max-[600px]:block">☰</label>
 
-        <div class="links">
-            <a href="{{ route('home') }}" class="{{ request()->routeIs('home') ? 'active' : '' }}">
-                <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <div class="flex flex-col gap-1
+                    max-[600px]:hidden max-[600px]:peer-checked:flex max-[600px]:absolute max-[600px]:top-full max-[600px]:right-0 max-[600px]:left-0 max-[600px]:bg-white max-[600px]:border-b max-[600px]:border-[#e7e3da] max-[600px]:flex-col max-[600px]:py-2 max-[600px]:px-3 max-[600px]:pb-3.5 max-[600px]:gap-0.5">
+
+            <a href="{{ route('home') }}"
+                class="flex items-center gap-3 w-full text-left no-underline text-[13px] tracking-wide py-2.5 px-2.5 rounded
+                       max-[900px]:justify-center max-[900px]:py-3 max-[900px]:px-0
+                       max-[600px]:py-2.5 max-[600px]:px-2
+                       {{ request()->routeIs('home') ? 'bg-[#a9762f] text-white' : 'text-[#6b6355] hover:bg-[#f5f0e6] hover:text-[#a9762f]' }}">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="w-[17px] h-[17px] shrink-0 stroke-current">
                     <path d="M3 10.5 12 3l9 7.5" />
                     <path d="M5 9.5V21h14V9.5" />
                 </svg>
-                <span class="label">Home</span>
+                <span class="label max-[900px]:hidden max-[600px]:inline">Home</span>
             </a>
-            <a href="{{ route('categories') }}" class="{{ request()->routeIs('categories') ? 'active' : '' }}">
-                <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+
+            <a href="{{ route('categories') }}"
+                class="flex items-center gap-3 w-full text-left no-underline text-[13px] tracking-wide py-2.5 px-2.5 rounded
+                       max-[900px]:justify-center max-[900px]:py-3 max-[900px]:px-0
+                       max-[600px]:py-2.5 max-[600px]:px-2
+                       {{ request()->routeIs('categories') ? 'bg-[#a9762f] text-white' : 'text-[#6b6355] hover:bg-[#f5f0e6] hover:text-[#a9762f]' }}">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="w-[17px] h-[17px] shrink-0 stroke-current">
                     <rect x="3" y="3" width="7" height="7" />
                     <rect x="14" y="3" width="7" height="7" />
                     <rect x="3" y="14" width="7" height="7" />
                     <rect x="14" y="14" width="7" height="7" />
                 </svg>
-                <span class="label">Categories</span>
+                <span class="label max-[900px]:hidden max-[600px]:inline">Categories</span>
             </a>
 
             @auth
-                <a href="{{ route('dashboard') }}" class="{{ request()->routeIs('dashboard') ? 'active' : '' }}">
-                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <a href="{{ route('dashboard') }}"
+                    class="flex items-center gap-3 w-full text-left no-underline text-[13px] tracking-wide py-2.5 px-2.5 rounded
+                           max-[900px]:justify-center max-[900px]:py-3 max-[900px]:px-0
+                           max-[600px]:py-2.5 max-[600px]:px-2
+                           {{ request()->routeIs('dashboard') ? 'bg-[#a9762f] text-white' : 'text-[#6b6355] hover:bg-[#f5f0e6] hover:text-[#a9762f]' }}">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="w-[17px] h-[17px] shrink-0 stroke-current">
                         <rect x="3" y="3" width="18" height="18" rx="2" />
                         <path d="M3 9h18M9 21V9" />
                     </svg>
-                    <span class="label">Dashboard</span>
+                    <span class="label max-[900px]:hidden max-[600px]:inline">Dashboard</span>
                 </a>
-                <a href="{{ route('profile.edit') }}" class="{{ request()->routeIs('profile.edit') ? 'active' : '' }}">
-                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <a href="{{ route('profile.edit') }}"
+                    class="flex items-center gap-3 w-full text-left no-underline text-[13px] tracking-wide py-2.5 px-2.5 rounded
+                           max-[900px]:justify-center max-[900px]:py-3 max-[900px]:px-0
+                           max-[600px]:py-2.5 max-[600px]:px-2
+                           {{ request()->routeIs('profile.edit') ? 'bg-[#a9762f] text-white' : 'text-[#6b6355] hover:bg-[#f5f0e6] hover:text-[#a9762f]' }}">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="w-[17px] h-[17px] shrink-0 stroke-current">
                         <circle cx="12" cy="8" r="4" />
                         <path d="M4 21c0-4 4-6 8-6s8 2 8 6" />
                     </svg>
-                    <span class="label">Profile</span>
+                    <span class="label max-[900px]:hidden max-[600px]:inline">Profile</span>
                 </a>
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
-                    <button type="submit">
+                    <button type="submit"
+                        class="flex items-center gap-3 w-full text-left text-[13px] tracking-wide py-2.5 px-2.5 rounded bg-none border-none cursor-pointer text-[#6b6355] hover:bg-[#f5f0e6] hover:text-[#a9762f]
+                               max-[900px]:justify-center max-[900px]:py-3 max-[900px]:px-0
+                               max-[600px]:py-2.5 max-[600px]:px-2">
                         <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"
-                            stroke-linejoin="round">
+                            stroke-linejoin="round" class="w-[17px] h-[17px] shrink-0 stroke-current">
                             <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
                             <path d="M16 17l5-5-5-5" />
                             <path d="M21 12H9" />
                         </svg>
-                        <span class="label">Log Out</span>
+                        <span class="label max-[900px]:hidden max-[600px]:inline">Log Out</span>
                     </button>
                 </form>
             @else
-                <a href="{{ route('login') }}">
-                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <a href="{{ route('login') }}"
+                    class="flex items-center gap-3 w-full text-left no-underline text-[13px] tracking-wide py-2.5 px-2.5 rounded text-[#6b6355] hover:bg-[#f5f0e6] hover:text-[#a9762f]
+                           max-[900px]:justify-center max-[900px]:py-3 max-[900px]:px-0
+                           max-[600px]:py-2.5 max-[600px]:px-2">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="w-[17px] h-[17px] shrink-0 stroke-current">
                         <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4" />
                         <path d="M10 17l5-5-5-5" />
                         <path d="M15 12H3" />
                     </svg>
-                    <span class="label">Login</span>
+                    <span class="label max-[900px]:hidden max-[600px]:inline">Login</span>
                 </a>
-                <a href="{{ route('register') }}">
-                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <a href="{{ route('register') }}"
+                    class="flex items-center gap-3 w-full text-left no-underline text-[13px] tracking-wide py-2.5 px-2.5 rounded text-[#6b6355] hover:bg-[#f5f0e6] hover:text-[#a9762f]
+                           max-[900px]:justify-center max-[900px]:py-3 max-[900px]:px-0
+                           max-[600px]:py-2.5 max-[600px]:px-2">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="w-[17px] h-[17px] shrink-0 stroke-current">
                         <circle cx="9" cy="7" r="4" />
                         <path d="M2 21c0-4 3-6 7-6s7 2 7 6" />
                         <path d="M19 8v6M22 11h-6" />
                     </svg>
-                    <span class="label">Register</span>
+                    <span class="label max-[900px]:hidden max-[600px]:inline">Register</span>
                 </a>
             @endauth
         </div>
     </nav>
 
-    <div class="main">
-        <div class="container">
-            <h1>All Watches</h1>
+    <!-- ===== Main content ===== -->
+    <div class="flex-1 min-w-0">
+        <div class="max-w-[1000px] mx-auto py-10 px-5 max-[600px]:py-6 max-[600px]:px-[15px]">
 
-            <form method="GET" action="{{ route('home') }}" class="filters">
-                <select name="category_id">
+            <h1 class="font-['Georgia',serif] font-normal text-[#a9762f] mb-5 max-[600px]:text-[22px]">All Watches</h1>
+
+            <form method="GET" action="{{ route('home') }}" class="flex gap-2.5 mb-6 flex-wrap">
+                <select name="category_id" class="py-1.5 px-2.5 border border-[#d9d4c8] rounded text-[13px]">
                     <option value="">All categories</option>
                     @foreach ($categories as $cat)
                         <option value="{{ $cat->id }}" {{ request('category_id') == $cat->id ? 'selected' : '' }}>
@@ -440,7 +148,7 @@
                     @endforeach
                 </select>
 
-                <select name="brand">
+                <select name="brand" class="py-1.5 px-2.5 border border-[#d9d4c8] rounded text-[13px]">
                     <option value="">All brands</option>
                     @foreach ($brands as $b)
                         <option value="{{ $b }}" {{ request('brand') == $b ? 'selected' : '' }}>
@@ -449,25 +157,28 @@
                     @endforeach
                 </select>
 
-                <input type="number" name="price_min" placeholder="Min DH" value="{{ request('price_min') }}">
-                <input type="number" name="price_max" placeholder="Max DH" value="{{ request('price_max') }}">
+                <input type="number" name="price_min" placeholder="Min DH" value="{{ request('price_min') }}"
+                    class="py-1.5 px-2.5 border border-[#d9d4c8] rounded text-[13px]">
+                <input type="number" name="price_max" placeholder="Max DH" value="{{ request('price_max') }}"
+                    class="py-1.5 px-2.5 border border-[#d9d4c8] rounded text-[13px]">
 
-                <button type="submit">Filter</button>
+                <button type="submit"
+                    class="bg-[#a9762f] text-white border-none py-1.5 px-3.5 cursor-pointer rounded">Filter</button>
             </form>
 
             @if ($watches->count() > 0)
-                <div class="grid">
+                <div class="grid grid-cols-3 gap-5 max-[900px]:grid-cols-2 max-[600px]:grid-cols-1">
                     @foreach ($watches as $watch)
-                        <div class="card">
-                            <img
-                                src="{{ $watch->image ? asset('storage/' . $watch->image) : 'https://via.placeholder.com/300x200' }}">
+                        <div class="bg-white border border-[#e7e3da] rounded overflow-hidden">
+                            <img src="{{ $watch->image ? asset('storage/' . $watch->image) : 'https://via.placeholder.com/300x200' }}"
+                                class="w-full h-[200px] object-cover max-[600px]:h-[220px]">
 
-                            <div class="card-body">
-                                <div class="brand">{{ $watch->brand }}</div>
-                                <h3 class="model">{{ $watch->model }}</h3>
-                                <p class="desc">{{ $watch->description }}</p>
-                                <div class="price">{{ $watch->price }} DH</div>
-                                <div class="stock {{ $watch->stock <= 2 ? 'low' : '' }}">
+                            <div class="p-[15px]">
+                                <div class="text-[#a9762f] text-[11px] uppercase tracking-wider">{{ $watch->brand }}</div>
+                                <h3 class="font-['Georgia',serif] font-normal my-1.5 text-[#1f1f1f]">{{ $watch->model }}</h3>
+                                <p class="text-[#7a766c] text-[13px]">{{ $watch->description }}</p>
+                                <div class="font-['Georgia',serif] text-lg text-[#1f1f1f] mt-2.5">{{ $watch->price }} DH</div>
+                                <div class="text-xs {{ $watch->stock <= 2 ? 'text-[#c15b3f]' : 'text-[#8a8676]' }}">
                                     {{ $watch->stock }} in stock
                                 </div>
                             </div>
@@ -475,7 +186,7 @@
                     @endforeach
                 </div>
 
-                <div style="margin-top: 30px;">
+                <div class="mt-8">
                     {{ $watches->links() }}
                 </div>
             @else

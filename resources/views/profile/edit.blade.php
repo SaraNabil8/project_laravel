@@ -5,88 +5,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profile - SN Watches</title>
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-
-    <style>
-        nav {
-            background: #ffffff;
-            padding: 15px 30px;
-            border-bottom: 1px solid #e7e3da;
-        }
-
-        nav .nav-inner {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        nav .logo {
-            display: flex;
-            align-items: center;
-            text-decoration: none;
-        }
-
-        nav .logo img {
-            height: 60px;
-            margin-right: -8px;
-        }
-
-        nav .logo span {
-            font-family: Georgia, serif;
-            font-size: 20px;
-            letter-spacing: 1px;
-            color: #a9762f;
-            text-decoration: none;
-        }
-
-        nav a {
-            margin-left: 20px;
-            text-decoration: none;
-            color: #a9762f;
-            font-size: 13px;
-            text-transform: uppercase;
-        }
-
-        nav a:hover {
-            text-decoration: underline;
-        }
-
-        @media (max-width: 600px) {
-            nav {
-                padding: 12px 16px;
-            }
-
-            nav .logo img {
-                height: 45px;
-            }
-
-            nav .logo span {
-                font-size: 16px;
-
-            }
-
-            nav a {
-                margin-left: 10px;
-                font-size: 12px;
-            }
-        }
-    </style>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
 <body class="font-sans antialiased bg-gray-100">
 
-    <nav>
-        <div class="nav-inner">
-            <a href="{{ route('home') }}" class="logo">
-                <img src="{{ asset('logo.png') }}" alt="SN Watches Logo">
-                <span>SN WATCHES</span>
+    <nav class="bg-white py-[15px] px-[30px] border-b border-[#e7e3da] max-[600px]:py-3 max-[600px]:px-4">
+        <div class="max-w-[1200px] mx-auto flex justify-between items-center">
+            <a href="{{ route('home') }}" class="flex items-center no-underline">
+                <img src="{{ asset('logo.png') }}" alt="SN Watches Logo" class="h-[60px] -mr-2 max-[600px]:h-[45px]">
+                <span class="font-['Georgia',serif] text-xl tracking-wide text-[#a9762f] no-underline max-[600px]:text-base">SN WATCHES</span>
             </a>
 
             <div>
-                <a href="{{ route('home') }}">Home</a>
-                <a href="{{ route('dashboard') }}">Dashboard</a>
+                <a href="{{ route('home') }}"
+                    class="ml-5 no-underline text-[#a9762f] text-[13px] uppercase hover:underline max-[600px]:ml-2.5 max-[600px]:text-xs">Home</a>
+                <a href="{{ route('dashboard') }}"
+                    class="ml-5 no-underline text-[#a9762f] text-[13px] uppercase hover:underline max-[600px]:ml-2.5 max-[600px]:text-xs">Dashboard</a>
             </div>
         </div>
     </nav>

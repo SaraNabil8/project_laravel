@@ -5,517 +5,204 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard - SN Watches</title>
-    <style>
-        * {
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: Arial, sans-serif;
-            background: #f4f2ec;
-            color: #2b2b2b;
-            margin: 0;
-            display: flex;
-            min-height: 100vh;
-        }
-
-        /* ===== Sidebar ===== */
-        nav {
-            background: #ffffff;
-            width: 210px;
-            flex-shrink: 0;
-            min-height: 100vh;
-            padding: 20px 14px;
-            display: flex;
-            flex-direction: column;
-            border-right: 1px solid #e7e3da;
-            position: sticky;
-            top: 0;
-            align-self: flex-start;
-            z-index: 1000;
-            transition: width 0.2s ease;
-        }
-
-        nav .logo {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 4px;
-            text-decoration: none;
-            margin-bottom: 26px;
-            padding: 10px 6px;
-            line-height: 1;
-        }
-
-        nav .logo img {
-            height: 115px;
-            width: 115px;
-            object-fit: contain;
-            flex-shrink: 0;
-            display: block;
-        }
-
-        nav .logo span {
-            font-family: 'Georgia', serif;
-            font-size: 15px;
-            letter-spacing: 0.6px;
-            color: #a9762f;
-            white-space: nowrap;
-            line-height: 1;
-        }
-
-        nav .links {
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-        }
-
-        nav a,
-        nav button {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            width: 100%;
-            text-align: left;
-            text-decoration: none;
-            color: #6b6355;
-            background: none;
-            border: none;
-            cursor: pointer;
-            font-size: 13px;
-            letter-spacing: 0.3px;
-            padding: 10px 10px;
-            border-radius: 5px;
-        }
-
-        nav a svg,
-        nav button svg {
-            width: 17px;
-            height: 17px;
-            flex-shrink: 0;
-            stroke: currentColor;
-        }
-
-        nav a:hover,
-        nav button:hover {
-            background: #f5f0e6;
-            color: #a9762f;
-        }
-
-        nav a.active {
-            background: #a9762f;
-            color: #ffffff;
-        }
-
-        /* Menu toggle (mobile) - CSS only, checkbox hack */
-        #menu-toggle {
-            display: none;
-        }
-
-        .menu-label {
-            display: none;
-            font-size: 24px;
-            color: #a9762f;
-            cursor: pointer;
-            user-select: none;
-            line-height: 1;
-            padding: 6px;
-        }
-
-        /* ===== Main content ===== */
-        .main {
-            flex: 1;
-            min-width: 0;
-        }
-
-        .page {
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 40px 20px 80px;
-        }
-
-        h1 {
-            font-family: 'Georgia', serif;
-            font-weight: 400;
-            color: #a9762f;
-            margin: 0 0 30px;
-        }
-
-        /* ===== Dashboard-specific content ===== */
-        .section {
-            margin-bottom: 40px;
-        }
-
-        .section-title {
-            font-family: 'Georgia', serif;
-            font-weight: 400;
-            font-size: 18px;
-            color: #1f1f1f;
-            margin: 0 0 15px;
-        }
-
-        .manage-grid,
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-        }
-
-        .stats-grid {
-            grid-template-columns: repeat(3, 1fr);
-        }
-
-        .manage-card,
-        .stat-card {
-            background: #ffffff;
-            border: 1px solid #e7e3da;
-            border-radius: 6px;
-            padding: 18px 20px;
-            text-decoration: none;
-            color: inherit;
-            display: block;
-        }
-
-        .stat-card {
-            border-left: 4px solid #a9762f;
-        }
-
-        .stat-card.danger {
-            border-left-color: #c15b3f;
-        }
-
-        .manage-title,
-        .label {
-            font-size: 13px;
-            font-weight: bold;
-            color: #1f1f1f;
-        }
-
-        .manage-desc {
-            font-size: 12px;
-            color: #8a8676;
-            margin-top: 3px;
-        }
-
-        .label {
-            font-size: 11px;
-            text-transform: uppercase;
-            color: #8a8676;
-            font-weight: normal;
-        }
-
-        .value {
-            font-size: 26px;
-            font-weight: bold;
-            color: #1f1f1f;
-            margin-top: 8px;
-        }
-
-        .value.danger {
-            color: #c15b3f;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            background: #ffffff;
-            border: 1px solid #e7e3da;
-            border-radius: 6px;
-            overflow: hidden;
-        }
-
-        th,
-        td {
-            text-align: left;
-            padding: 10px 15px;
-            border-bottom: 1px solid #efece5;
-            font-size: 13px;
-        }
-
-        th {
-            background: #f7f5f0;
-            color: #8a8676;
-            text-transform: uppercase;
-            font-size: 11px;
-        }
-
-        .empty {
-            color: #9b968a;
-            font-style: italic;
-            padding: 15px;
-        }
-
-        /* ===== Responsive ===== */
-
-        @media (max-width: 700px) {
-
-            .manage-grid,
-            .stats-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        /* Tablet: shrink sidebar to icons only */
-        @media (max-width: 900px) {
-            nav {
-                width: 64px;
-                padding: 16px 8px;
-                align-items: center;
-            }
-
-            nav .logo {
-                padding: 6px 0;
-                margin-bottom: 20px;
-            }
-
-            nav .logo span {
-                display: none;
-            }
-
-            nav .logo img {
-                height: 38px;
-                width: 38px;
-            }
-
-            nav a,
-            nav button {
-                justify-content: center;
-                padding: 12px 0;
-            }
-
-            nav a span.label,
-            nav button span.label {
-                display: none;
-            }
-        }
-
-        /* Mobile: collapse to top bar + dropdown */
-        @media (max-width: 600px) {
-            body {
-                display: block;
-            }
-
-            nav {
-                width: auto;
-                min-height: auto;
-                position: sticky;
-                top: 0;
-                flex-direction: row;
-                align-items: center;
-                justify-content: space-between;
-                padding: 10px 14px;
-                border-right: none;
-                border-bottom: 1px solid #e7e3da;
-            }
-
-            nav .logo {
-                flex-direction: row;
-                margin-bottom: 0;
-                padding: 0;
-                gap: 8px;
-            }
-
-            nav .logo img {
-                height: 40px;
-                width: 40px;
-            }
-
-            nav .logo span {
-                display: inline;
-                font-size: 15px;
-            }
-
-            .menu-label {
-                display: block;
-            }
-
-            nav .links {
-                display: none;
-                position: absolute;
-                top: 100%;
-                right: 0;
-                left: 0;
-                background: #ffffff;
-                border-bottom: 1px solid #e7e3da;
-                flex-direction: column;
-                padding: 8px 12px 14px;
-                gap: 2px;
-            }
-
-            #menu-toggle:checked~.links {
-                display: flex;
-            }
-
-            nav a,
-            nav button {
-                padding: 10px 8px;
-            }
-
-            nav a span.label,
-            nav button span.label {
-                display: inline;
-            }
-
-            .page {
-                padding: 24px 15px;
-            }
-
-            h1 {
-                font-size: 22px;
-            }
-        }
-    </style>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body>
+<body class="font-sans bg-[#f4f2ec] text-[#2b2b2b] m-0 flex min-h-screen max-[600px]:block">
 
-    <nav>
-        <a href="{{ route('home') }}" class="logo">
-            <img src="{{ asset('logo.png') }}" alt="SN Watches Logo">
-            <span>SN WATCHES</span>
+    <!-- ===== Sidebar ===== -->
+    <nav class="bg-white w-[210px] shrink-0 min-h-screen py-5 px-3.5 flex flex-col border-r border-[#e7e3da] sticky top-0 self-start z-[1000] transition-[width] duration-200
+                max-[900px]:w-16 max-[900px]:px-2 max-[900px]:py-4 max-[900px]:items-center
+                max-[600px]:w-auto max-[600px]:min-h-0 max-[600px]:flex-row max-[600px]:items-center max-[600px]:justify-between max-[600px]:py-2.5 max-[600px]:px-3.5 max-[600px]:border-r-0 max-[600px]:border-b max-[600px]:border-[#e7e3da]">
+
+        <a href="{{ route('home') }}"
+            class="flex flex-col items-center gap-1 no-underline mb-6 py-2.5 px-1.5 leading-none
+                   max-[900px]:py-1.5 max-[900px]:px-0 max-[900px]:mb-5
+                   max-[600px]:flex-row max-[600px]:mb-0 max-[600px]:p-0 max-[600px]:gap-2">
+            <img src="{{ asset('logo.png') }}" alt="SN Watches Logo"
+                class="h-[115px] w-[115px] object-contain shrink-0 block
+                       max-[900px]:h-[38px] max-[900px]:w-[38px]
+                       max-[600px]:h-10 max-[600px]:w-10">
+            <span class="font-['Georgia',serif] text-[15px] tracking-wide text-[#a9762f] whitespace-nowrap leading-none
+                         max-[900px]:hidden
+                         max-[600px]:inline max-[600px]:text-[15px]">SN WATCHES</span>
         </a>
 
-        <input type="checkbox" id="menu-toggle">
-        <label for="menu-toggle" class="menu-label">☰</label>
+        <input type="checkbox" id="menu-toggle" class="hidden peer">
+        <label for="menu-toggle"
+            class="hidden text-2xl text-[#a9762f] cursor-pointer select-none leading-none p-1.5 max-[600px]:block">☰</label>
 
-        <div class="links">
-            <a href="{{ route('home') }}" class="{{ request()->routeIs('home') ? 'active' : '' }}">
-                <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <div class="flex flex-col gap-1
+                    max-[600px]:hidden max-[600px]:peer-checked:flex max-[600px]:absolute max-[600px]:top-full max-[600px]:right-0 max-[600px]:left-0 max-[600px]:bg-white max-[600px]:border-b max-[600px]:border-[#e7e3da] max-[600px]:flex-col max-[600px]:py-2 max-[600px]:px-3 max-[600px]:pb-3.5 max-[600px]:gap-0.5">
+
+            <a href="{{ route('home') }}"
+                class="flex items-center gap-3 w-full text-left no-underline text-[13px] tracking-wide py-2.5 px-2.5 rounded
+                       max-[900px]:justify-center max-[900px]:py-3 max-[900px]:px-0
+                       max-[600px]:py-2.5 max-[600px]:px-2
+                       {{ request()->routeIs('home') ? 'bg-[#a9762f] text-white' : 'text-[#6b6355] hover:bg-[#f5f0e6] hover:text-[#a9762f]' }}">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="w-[17px] h-[17px] shrink-0 stroke-current">
                     <path d="M3 10.5 12 3l9 7.5" />
                     <path d="M5 9.5V21h14V9.5" />
                 </svg>
-                <span class="label">Home</span>
+                <span class="label max-[900px]:hidden max-[600px]:inline">Home</span>
             </a>
-            <a href="{{ route('categories') }}" class="{{ request()->routeIs('categories') ? 'active' : '' }}">
-                <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+
+            <a href="{{ route('categories') }}"
+                class="flex items-center gap-3 w-full text-left no-underline text-[13px] tracking-wide py-2.5 px-2.5 rounded
+                       max-[900px]:justify-center max-[900px]:py-3 max-[900px]:px-0
+                       max-[600px]:py-2.5 max-[600px]:px-2
+                       {{ request()->routeIs('categories') ? 'bg-[#a9762f] text-white' : 'text-[#6b6355] hover:bg-[#f5f0e6] hover:text-[#a9762f]' }}">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="w-[17px] h-[17px] shrink-0 stroke-current">
                     <rect x="3" y="3" width="7" height="7" />
                     <rect x="14" y="3" width="7" height="7" />
                     <rect x="3" y="14" width="7" height="7" />
                     <rect x="14" y="14" width="7" height="7" />
                 </svg>
-                <span class="label">Categories</span>
+                <span class="label max-[900px]:hidden max-[600px]:inline">Categories</span>
             </a>
-            <a href="{{ route('dashboard') }}" class="{{ request()->routeIs('dashboard') ? 'active' : '' }}">
-                <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+
+            <a href="{{ route('dashboard') }}"
+                class="flex items-center gap-3 w-full text-left no-underline text-[13px] tracking-wide py-2.5 px-2.5 rounded
+                       max-[900px]:justify-center max-[900px]:py-3 max-[900px]:px-0
+                       max-[600px]:py-2.5 max-[600px]:px-2
+                       {{ request()->routeIs('dashboard') ? 'bg-[#a9762f] text-white' : 'text-[#6b6355] hover:bg-[#f5f0e6] hover:text-[#a9762f]' }}">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="w-[17px] h-[17px] shrink-0 stroke-current">
                     <rect x="3" y="3" width="18" height="18" rx="2" />
                     <path d="M3 9h18M9 21V9" />
                 </svg>
-                <span class="label">Dashboard</span>
+                <span class="label max-[900px]:hidden max-[600px]:inline">Dashboard</span>
             </a>
-            <a href="{{ route('profile.edit') }}" class="{{ request()->routeIs('profile.edit') ? 'active' : '' }}">
-                <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+
+            <a href="{{ route('profile.edit') }}"
+                class="flex items-center gap-3 w-full text-left no-underline text-[13px] tracking-wide py-2.5 px-2.5 rounded
+                       max-[900px]:justify-center max-[900px]:py-3 max-[900px]:px-0
+                       max-[600px]:py-2.5 max-[600px]:px-2
+                       {{ request()->routeIs('profile.edit') ? 'bg-[#a9762f] text-white' : 'text-[#6b6355] hover:bg-[#f5f0e6] hover:text-[#a9762f]' }}">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="w-[17px] h-[17px] shrink-0 stroke-current">
                     <circle cx="12" cy="8" r="4" />
                     <path d="M4 21c0-4 4-6 8-6s8 2 8 6" />
                 </svg>
-                <span class="label">Profile</span>
+                <span class="label max-[900px]:hidden max-[600px]:inline">Profile</span>
             </a>
+
             <form method="POST" action="{{ route('logout') }}">
                 @csrf
-                <button type="submit">
+                <button type="submit"
+                    class="flex items-center gap-3 w-full text-left text-[13px] tracking-wide py-2.5 px-2.5 rounded bg-none border-none cursor-pointer text-[#6b6355] hover:bg-[#f5f0e6] hover:text-[#a9762f]
+                           max-[900px]:justify-center max-[900px]:py-3 max-[900px]:px-0
+                           max-[600px]:py-2.5 max-[600px]:px-2">
                     <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"
-                        stroke-linejoin="round">
+                        stroke-linejoin="round" class="w-[17px] h-[17px] shrink-0 stroke-current">
                         <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
                         <path d="M16 17l5-5-5-5" />
                         <path d="M21 12H9" />
                     </svg>
-                    <span class="label">Log Out</span>
+                    <span class="label max-[900px]:hidden max-[600px]:inline">Log Out</span>
                 </button>
             </form>
         </div>
     </nav>
 
-    <div class="main">
-        <div class="page">
-            <h1>Dashboard</h1>
+    <!-- ===== Main content ===== -->
+    <div class="flex-1 min-w-0">
+        <div class="max-w-[1100px] mx-auto pt-10 px-5 pb-20 max-[600px]:pt-6 max-[600px]:px-[15px] max-[600px]:pb-6">
+
+            <h1 class="font-['Georgia',serif] font-normal text-[#a9762f] mb-[30px] max-[600px]:text-[22px]">Dashboard</h1>
 
             @if (auth()->user()->isAdmin() || auth()->user()->isEditor())
-                <div class="section">
-                    <div class="section-title">Management</div>
-                    <div class="manage-grid">
-                        <a href="{{ route('watches.index') }}" class="manage-card">
-                            <div class="manage-title">Manage Watches</div>
-                            <div class="manage-desc">Add, edit or remove watches</div>
+                <div class="mb-10">
+                    <div class="font-['Georgia',serif] font-normal text-lg text-[#1f1f1f] mb-4">Management</div>
+                    <div class="grid grid-cols-2 gap-4 max-[700px]:grid-cols-1">
+                        <a href="{{ route('watches.index') }}"
+                            class="bg-white border border-[#e7e3da] rounded-md py-[18px] px-5 no-underline text-inherit block">
+                            <div class="text-[13px] font-bold text-[#1f1f1f]">Manage Watches</div>
+                            <div class="text-xs text-[#8a8676] mt-1">Add, edit or remove watches</div>
                         </a>
-                        <a href="{{ route('categories.index') }}" class="manage-card">
-                            <div class="manage-title">Manage Categories</div>
-                            <div class="manage-desc">Organize your catalog categories</div>
+                        <a href="{{ route('categories.index') }}"
+                            class="bg-white border border-[#e7e3da] rounded-md py-[18px] px-5 no-underline text-inherit block">
+                            <div class="text-[13px] font-bold text-[#1f1f1f]">Manage Categories</div>
+                            <div class="text-xs text-[#8a8676] mt-1">Organize your catalog categories</div>
                         </a>
                     </div>
                 </div>
 
-                <div class="section">
-                    <div class="stats-grid">
-                        <div class="stat-card">
-                            <div class="label">Total Watches</div>
-                            <div class="value">{{ $totalWatches }}</div>
+                <div class="mb-10">
+                    <div class="grid grid-cols-3 gap-4 max-[700px]:grid-cols-1">
+                        <div class="bg-white border border-[#e7e3da] border-l-4 border-l-[#a9762f] rounded-md py-[18px] px-5">
+                            <div class="text-[11px] uppercase text-[#8a8676] font-normal">Total Watches</div>
+                            <div class="text-[26px] font-bold text-[#1f1f1f] mt-2">{{ $totalWatches }}</div>
                         </div>
-                        <div class="stat-card">
-                            <div class="label">Categories</div>
-                            <div class="value">{{ $totalCategories }}</div>
+                        <div class="bg-white border border-[#e7e3da] border-l-4 border-l-[#a9762f] rounded-md py-[18px] px-5">
+                            <div class="text-[11px] uppercase text-[#8a8676] font-normal">Categories</div>
+                            <div class="text-[26px] font-bold text-[#1f1f1f] mt-2">{{ $totalCategories }}</div>
                         </div>
-                        <div class="stat-card danger">
-                            <div class="label">Out of Stock</div>
-                            <div class="value danger">{{ $outOfStock }}</div>
+                        <div class="bg-white border border-[#e7e3da] border-l-4 border-l-[#c15b3f] rounded-md py-[18px] px-5">
+                            <div class="text-[11px] uppercase text-[#8a8676] font-normal">Out of Stock</div>
+                            <div class="text-[26px] font-bold text-[#c15b3f] mt-2">{{ $outOfStock }}</div>
                         </div>
                     </div>
                 </div>
 
-                <div class="section">
-                    <div class="section-title">Low Stock (≤ 5 units)</div>
+                <div class="mb-10">
+                    <div class="font-['Georgia',serif] font-normal text-lg text-[#1f1f1f] mb-4">Low Stock (≤ 5 units)</div>
 
                     @if ($lowStock->count() > 0)
-                        <table>
+                        <table class="w-full border-collapse bg-white border border-[#e7e3da] rounded-md overflow-hidden">
                             <tr>
-                                <th>Model</th>
-                                <th>Brand</th>
-                                <th>Stock</th>
+                                <th class="text-left py-2.5 px-[15px] border-b border-[#efece5] text-[13px] bg-[#f7f5f0] text-[#8a8676] uppercase !text-[11px]">Model</th>
+                                <th class="text-left py-2.5 px-[15px] border-b border-[#efece5] text-[13px] bg-[#f7f5f0] text-[#8a8676] uppercase !text-[11px]">Brand</th>
+                                <th class="text-left py-2.5 px-[15px] border-b border-[#efece5] text-[13px] bg-[#f7f5f0] text-[#8a8676] uppercase !text-[11px]">Stock</th>
                             </tr>
                             @foreach ($lowStock as $watch)
                                 <tr>
-                                    <td>{{ $watch->model }}</td>
-                                    <td>{{ $watch->brand }}</td>
-                                    <td>{{ $watch->stock }}</td>
+                                    <td class="text-left py-2.5 px-[15px] border-b border-[#efece5] text-[13px]">{{ $watch->model }}</td>
+                                    <td class="text-left py-2.5 px-[15px] border-b border-[#efece5] text-[13px]">{{ $watch->brand }}</td>
+                                    <td class="text-left py-2.5 px-[15px] border-b border-[#efece5] text-[13px]">{{ $watch->stock }}</td>
                                 </tr>
                             @endforeach
                         </table>
                     @else
-                        <div class="empty">All watches are well stocked.</div>
+                        <div class="text-[#9b968a] italic p-[15px]">All watches are well stocked.</div>
                     @endif
                 </div>
 
                 @if (auth()->user()->isAdmin())
-                    <div class="section">
-                        <div class="section-title">Users</div>
+                    <div class="mb-10">
+                        <div class="font-['Georgia',serif] font-normal text-lg text-[#1f1f1f] mb-4">Users</div>
 
                         @if ($users->count() > 0)
-                            <table>
+                            <table class="w-full border-collapse bg-white border border-[#e7e3da] rounded-md overflow-hidden">
                                 <tr>
-                                    <th>Name</th>
-                                    <th>Email</th>
-                                    <th>Role</th>
-                                    <th>Joined</th>
+                                    <th class="text-left py-2.5 px-[15px] border-b border-[#efece5] text-[13px] bg-[#f7f5f0] text-[#8a8676] uppercase !text-[11px]">Name</th>
+                                    <th class="text-left py-2.5 px-[15px] border-b border-[#efece5] text-[13px] bg-[#f7f5f0] text-[#8a8676] uppercase !text-[11px]">Email</th>
+                                    <th class="text-left py-2.5 px-[15px] border-b border-[#efece5] text-[13px] bg-[#f7f5f0] text-[#8a8676] uppercase !text-[11px]">Role</th>
+                                    <th class="text-left py-2.5 px-[15px] border-b border-[#efece5] text-[13px] bg-[#f7f5f0] text-[#8a8676] uppercase !text-[11px]">Joined</th>
                                 </tr>
                                 @foreach ($users as $user)
                                     <tr>
-                                        <td>{{ $user->name }}</td>
-                                        <td>{{ $user->email }}</td>
-                                        <td>
+                                        <td class="text-left py-2.5 px-[15px] border-b border-[#efece5] text-[13px]">{{ $user->name }}</td>
+                                        <td class="text-left py-2.5 px-[15px] border-b border-[#efece5] text-[13px]">{{ $user->email }}</td>
+                                        <td class="text-left py-2.5 px-[15px] border-b border-[#efece5] text-[13px]">
                                             {{ $user->isAdmin() ? 'Admin' : ($user->isEditor() ? 'Editor' : 'Client') }}
                                         </td>
-                                        <td>{{ $user->created_at->format('d M Y') }}</td>
+                                        <td class="text-left py-2.5 px-[15px] border-b border-[#efece5] text-[13px]">{{ $user->created_at->format('d M Y') }}</td>
                                     </tr>
                                 @endforeach
                             </table>
                         @else
-                            <div class="empty">No users found.</div>
+                            <div class="text-[#9b968a] italic p-[15px]">No users found.</div>
                         @endif
                     </div>
                 @endif
             @else
-                <div class="section">
-                    <div class="section-title">Welcome, {{ auth()->user()->name }}</div>
-                    <p>Browse our watch collection from the <a href="{{ route('home') }}" style="color:#a9762f;">home
-                            page</a> or explore <a href="{{ route('categories') }}" style="color:#a9762f;">categories</a>.
+                <div class="mb-10">
+                    <div class="font-['Georgia',serif] font-normal text-lg text-[#1f1f1f] mb-4">Welcome, {{ auth()->user()->name }}</div>
+                    <p>Browse our watch collection from the <a href="{{ route('home') }}" class="text-[#a9762f]">home
+                            page</a> or explore <a href="{{ route('categories') }}" class="text-[#a9762f]">categories</a>.
                     </p>
                 </div>
             @endif

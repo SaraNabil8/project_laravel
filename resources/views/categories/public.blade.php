@@ -5,399 +5,130 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Categories - Watches Shop</title>
-    <style>
-        * {
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: Arial, sans-serif;
-            background: #faf9f6;
-            color: #2b2b2b;
-            margin: 0;
-            display: flex;
-            min-height: 100vh;
-        }
-
-        /* ===== Sidebar ===== */
-        nav {
-            background: #ffffff;
-            width: 210px;
-            flex-shrink: 0;
-            min-height: 100vh;
-            padding: 20px 14px;
-            display: flex;
-            flex-direction: column;
-            border-right: 1px solid #e7e3da;
-            position: sticky;
-            top: 0;
-            align-self: flex-start;
-            z-index: 1000;
-            transition: width 0.2s ease;
-        }
-
-        nav .logo {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 4px;
-            text-decoration: none;
-            margin-bottom: 26px;
-            padding: 10px 6px;
-            line-height: 1;
-        }
-
-        nav .logo img {
-            height: 115px;
-            width: 115px;
-            object-fit: contain;
-            flex-shrink: 0;
-            display: block;
-        }
-
-        nav .logo span {
-            font-family: 'Georgia', serif;
-            font-size: 15px;
-            letter-spacing: 0.6px;
-            color: #a9762f;
-            white-space: nowrap;
-            line-height: 1;
-        }
-
-        nav .links {
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-        }
-
-        nav a,
-        nav button {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            width: 100%;
-            text-align: left;
-            text-decoration: none;
-            color: #6b6355;
-            background: none;
-            border: none;
-            cursor: pointer;
-            font-size: 13px;
-            letter-spacing: 0.3px;
-            padding: 10px 10px;
-            border-radius: 5px;
-        }
-
-        nav a svg,
-        nav button svg {
-            width: 17px;
-            height: 17px;
-            flex-shrink: 0;
-            stroke: currentColor;
-        }
-
-        nav a:hover,
-        nav button:hover {
-            background: #f5f0e6;
-            color: #a9762f;
-        }
-
-        nav a.active {
-            background: #a9762f;
-            color: #ffffff;
-        }
-
-        /* Menu toggle (mobile) - CSS only, checkbox hack */
-        #menu-toggle {
-            display: none;
-        }
-
-        .menu-label {
-            display: none;
-            font-size: 24px;
-            color: #a9762f;
-            cursor: pointer;
-            user-select: none;
-            line-height: 1;
-            padding: 6px;
-        }
-
-        /* ===== Main content ===== */
-        .main {
-            flex: 1;
-            min-width: 0;
-        }
-
-        .container {
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 40px 20px 80px;
-        }
-
-        h1 {
-            font-family: 'Georgia', serif;
-            font-weight: 400;
-            font-size: 30px;
-            letter-spacing: 1px;
-            margin: 0 0 36px;
-            color: #a9762f;
-        }
-
-        /* ===== Categories grid ===== */
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 24px;
-            align-items: stretch;
-        }
-
-        .cat-card {
-            display: flex;
-            flex-direction: column;
-            height: 100%;
-            text-decoration: none;
-            color: inherit;
-            background: #ffffff;
-            border: 1px solid #e7e3da;
-            border-radius: 4px;
-            overflow: hidden;
-        }
-
-        .cat-image {
-            width: 100%;
-            height: 180px;
-            overflow: hidden;
-        }
-
-        .cat-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-        }
-
-        .cat-body {
-            padding: 15px;
-            font-family: Arial, sans-serif;
-            flex: 1;
-        }
-
-        .cat-body h3 {
-            font-family: 'Georgia', serif;
-            font-weight: 400;
-            font-size: 18px;
-            color: #1f1f1f;
-            margin: 0 0 5px;
-        }
-
-        .cat-body .count {
-            font-size: 13px;
-            color: #8a8676;
-        }
-
-        .empty-msg {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            color: #9b968a;
-            padding: 60px 0;
-        }
-
-        /* ===== Responsive ===== */
-
-        /* Tablet: shrink sidebar to icons only */
-        @media (max-width: 900px) {
-            .grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            nav {
-                width: 64px;
-                padding: 16px 8px;
-                align-items: center;
-            }
-
-            nav .logo {
-                padding: 6px 0;
-                margin-bottom: 20px;
-            }
-
-            nav .logo span {
-                display: none;
-            }
-
-            nav .logo img {
-                height: 38px;
-                width: 38px;
-            }
-
-            nav a,
-            nav button {
-                justify-content: center;
-                padding: 12px 0;
-            }
-
-            nav a span.label,
-            nav button span.label {
-                display: none;
-            }
-        }
-
-        /* Mobile: collapse to top bar + dropdown */
-        @media (max-width: 600px) {
-            body {
-                display: block;
-            }
-
-            nav {
-                width: auto;
-                min-height: auto;
-                position: sticky;
-                top: 0;
-                flex-direction: row;
-                align-items: center;
-                justify-content: space-between;
-                padding: 10px 14px;
-                border-right: none;
-                border-bottom: 1px solid #e7e3da;
-            }
-
-            nav .logo {
-                flex-direction: row;
-                margin-bottom: 0;
-                padding: 0;
-                gap: 8px;
-            }
-
-            nav .logo img {
-                height: 40px;
-                width: 40px;
-            }
-
-            nav .logo span {
-                display: inline;
-                font-size: 15px;
-            }
-
-            .menu-label {
-                display: block;
-            }
-
-            nav .links {
-                display: none;
-                position: absolute;
-                top: 100%;
-                right: 0;
-                left: 0;
-                background: #ffffff;
-                border-bottom: 1px solid #e7e3da;
-                flex-direction: column;
-                padding: 8px 12px 14px;
-                gap: 2px;
-            }
-
-            #menu-toggle:checked~.links {
-                display: flex;
-            }
-
-            nav a,
-            nav button {
-                padding: 10px 8px;
-            }
-
-            nav a span.label,
-            nav button span.label {
-                display: inline;
-            }
-
-            .container {
-                padding: 24px 15px;
-            }
-
-            h1 {
-                font-size: 22px;
-            }
-
-            .grid {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body>
+<body class="font-sans bg-[#faf9f6] text-[#2b2b2b] m-0 flex min-h-screen max-[600px]:block">
 
-    <nav>
-        <a href="{{ route('home') }}" class="logo">
-            <img src="{{ asset('logo.png') }}" alt="SN Watches Logo">
-            <span>SN WATCHES</span>
+    <!-- ===== Sidebar ===== -->
+    <nav class="bg-white w-[210px] shrink-0 min-h-screen py-5 px-3.5 flex flex-col border-r border-[#e7e3da] sticky top-0 self-start z-[1000] transition-[width] duration-200
+                max-[900px]:w-16 max-[900px]:px-2 max-[900px]:py-4 max-[900px]:items-center
+                max-[600px]:w-auto max-[600px]:min-h-0 max-[600px]:flex-row max-[600px]:items-center max-[600px]:justify-between max-[600px]:py-2.5 max-[600px]:px-3.5 max-[600px]:border-r-0 max-[600px]:border-b max-[600px]:border-[#e7e3da]">
+
+        <a href="{{ route('home') }}"
+            class="flex flex-col items-center gap-1 no-underline mb-6 py-2.5 px-1.5 leading-none
+                   max-[900px]:py-1.5 max-[900px]:px-0 max-[900px]:mb-5
+                   max-[600px]:flex-row max-[600px]:mb-0 max-[600px]:p-0 max-[600px]:gap-2">
+            <img src="{{ asset('logo.png') }}" alt="SN Watches Logo"
+                class="h-[115px] w-[115px] object-contain shrink-0 block
+                       max-[900px]:h-[38px] max-[900px]:w-[38px]
+                       max-[600px]:h-10 max-[600px]:w-10">
+            <span class="font-['Georgia',serif] text-[15px] tracking-wide text-[#a9762f] whitespace-nowrap leading-none
+                         max-[900px]:hidden
+                         max-[600px]:inline max-[600px]:text-[15px]">SN WATCHES</span>
         </a>
 
-        <input type="checkbox" id="menu-toggle">
-        <label for="menu-toggle" class="menu-label">☰</label>
+        <input type="checkbox" id="menu-toggle" class="hidden peer">
+        <label for="menu-toggle"
+            class="hidden text-2xl text-[#a9762f] cursor-pointer select-none leading-none p-1.5 max-[600px]:block">☰</label>
 
-        <div class="links">
-            <a href="{{ route('home') }}" class="{{ request()->routeIs('home') ? 'active' : '' }}">
-                <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <div class="flex flex-col gap-1
+                    max-[600px]:hidden max-[600px]:peer-checked:flex max-[600px]:absolute max-[600px]:top-full max-[600px]:right-0 max-[600px]:left-0 max-[600px]:bg-white max-[600px]:border-b max-[600px]:border-[#e7e3da] max-[600px]:flex-col max-[600px]:py-2 max-[600px]:px-3 max-[600px]:pb-3.5 max-[600px]:gap-0.5">
+
+            <a href="{{ route('home') }}"
+                class="flex items-center gap-3 w-full text-left no-underline text-[13px] tracking-wide py-2.5 px-2.5 rounded
+                       max-[900px]:justify-center max-[900px]:py-3 max-[900px]:px-0
+                       max-[600px]:py-2.5 max-[600px]:px-2
+                       {{ request()->routeIs('home') ? 'bg-[#a9762f] text-white' : 'text-[#6b6355] hover:bg-[#f5f0e6] hover:text-[#a9762f]' }}">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="w-[17px] h-[17px] shrink-0 stroke-current">
                     <path d="M3 10.5 12 3l9 7.5" />
                     <path d="M5 9.5V21h14V9.5" />
                 </svg>
-                <span class="label">Home</span>
+                <span class="label max-[900px]:hidden max-[600px]:inline">Home</span>
             </a>
-            <a href="{{ route('categories') }}" class="{{ request()->routeIs('categories') ? 'active' : '' }}">
-                <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+
+            <a href="{{ route('categories') }}"
+                class="flex items-center gap-3 w-full text-left no-underline text-[13px] tracking-wide py-2.5 px-2.5 rounded
+                       max-[900px]:justify-center max-[900px]:py-3 max-[900px]:px-0
+                       max-[600px]:py-2.5 max-[600px]:px-2
+                       {{ request()->routeIs('categories') ? 'bg-[#a9762f] text-white' : 'text-[#6b6355] hover:bg-[#f5f0e6] hover:text-[#a9762f]' }}">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="w-[17px] h-[17px] shrink-0 stroke-current">
                     <rect x="3" y="3" width="7" height="7" />
                     <rect x="14" y="3" width="7" height="7" />
                     <rect x="3" y="14" width="7" height="7" />
                     <rect x="14" y="14" width="7" height="7" />
                 </svg>
-                <span class="label">Categories</span>
+                <span class="label max-[900px]:hidden max-[600px]:inline">Categories</span>
             </a>
 
             @if (Route::has('login'))
                 @auth
-                    <a href="{{ route('dashboard') }}" class="{{ request()->routeIs('dashboard') ? 'active' : '' }}">
-                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <a href="{{ route('dashboard') }}"
+                        class="flex items-center gap-3 w-full text-left no-underline text-[13px] tracking-wide py-2.5 px-2.5 rounded
+                               max-[900px]:justify-center max-[900px]:py-3 max-[900px]:px-0
+                               max-[600px]:py-2.5 max-[600px]:px-2
+                               {{ request()->routeIs('dashboard') ? 'bg-[#a9762f] text-white' : 'text-[#6b6355] hover:bg-[#f5f0e6] hover:text-[#a9762f]' }}">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            class="w-[17px] h-[17px] shrink-0 stroke-current">
                             <rect x="3" y="3" width="18" height="18" rx="2" />
                             <path d="M3 9h18M9 21V9" />
                         </svg>
-                        <span class="label">Dashboard</span>
+                        <span class="label max-[900px]:hidden max-[600px]:inline">Dashboard</span>
                     </a>
-                    <a href="{{ route('profile.edit') }}" class="{{ request()->routeIs('profile.edit') ? 'active' : '' }}">
-                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <a href="{{ route('profile.edit') }}"
+                        class="flex items-center gap-3 w-full text-left no-underline text-[13px] tracking-wide py-2.5 px-2.5 rounded
+                               max-[900px]:justify-center max-[900px]:py-3 max-[900px]:px-0
+                               max-[600px]:py-2.5 max-[600px]:px-2
+                               {{ request()->routeIs('profile.edit') ? 'bg-[#a9762f] text-white' : 'text-[#6b6355] hover:bg-[#f5f0e6] hover:text-[#a9762f]' }}">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            class="w-[17px] h-[17px] shrink-0 stroke-current">
                             <circle cx="12" cy="8" r="4" />
                             <path d="M4 21c0-4 4-6 8-6s8 2 8 6" />
                         </svg>
-                        <span class="label">Profile</span>
+                        <span class="label max-[900px]:hidden max-[600px]:inline">Profile</span>
                     </a>
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
-                        <button type="submit">
+                        <button type="submit"
+                            class="flex items-center gap-3 w-full text-left text-[13px] tracking-wide py-2.5 px-2.5 rounded bg-none border-none cursor-pointer text-[#6b6355] hover:bg-[#f5f0e6] hover:text-[#a9762f]
+                                   max-[900px]:justify-center max-[900px]:py-3 max-[900px]:px-0
+                                   max-[600px]:py-2.5 max-[600px]:px-2">
                             <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round">
+                                stroke-linejoin="round" class="w-[17px] h-[17px] shrink-0 stroke-current">
                                 <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
                                 <path d="M16 17l5-5-5-5" />
                                 <path d="M21 12H9" />
                             </svg>
-                            <span class="label">Log Out</span>
+                            <span class="label max-[900px]:hidden max-[600px]:inline">Log Out</span>
                         </button>
                     </form>
                 @else
-                    <a href="{{ route('login') }}">
-                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <a href="{{ route('login') }}"
+                        class="flex items-center gap-3 w-full text-left no-underline text-[13px] tracking-wide py-2.5 px-2.5 rounded text-[#6b6355] hover:bg-[#f5f0e6] hover:text-[#a9762f]
+                               max-[900px]:justify-center max-[900px]:py-3 max-[900px]:px-0
+                               max-[600px]:py-2.5 max-[600px]:px-2">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            class="w-[17px] h-[17px] shrink-0 stroke-current">
                             <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4" />
                             <path d="M10 17l5-5-5-5" />
                             <path d="M15 12H3" />
                         </svg>
-                        <span class="label">Login</span>
+                        <span class="label max-[900px]:hidden max-[600px]:inline">Login</span>
                     </a>
                     @if (Route::has('register'))
-                        <a href="{{ route('register') }}">
-                            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <a href="{{ route('register') }}"
+                            class="flex items-center gap-3 w-full text-left no-underline text-[13px] tracking-wide py-2.5 px-2.5 rounded text-[#6b6355] hover:bg-[#f5f0e6] hover:text-[#a9762f]
+                                   max-[900px]:justify-center max-[900px]:py-3 max-[900px]:px-0
+                                   max-[600px]:py-2.5 max-[600px]:px-2">
+                            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                class="w-[17px] h-[17px] shrink-0 stroke-current">
                                 <circle cx="9" cy="7" r="4" />
                                 <path d="M2 21c0-4 3-6 7-6s7 2 7 6" />
                                 <path d="M19 8v6M22 11h-6" />
                             </svg>
-                            <span class="label">Register</span>
+                            <span class="label max-[900px]:hidden max-[600px]:inline">Register</span>
                         </a>
                     @endif
                 @endauth
@@ -405,34 +136,38 @@
         </div>
     </nav>
 
-    <div class="main">
-        <div class="container">
-            <h1>Categories</h1>
+    <!-- ===== Main content ===== -->
+    <div class="flex-1 min-w-0">
+        <div class="max-w-[1100px] mx-auto pt-10 px-5 pb-20 max-[600px]:pt-6 max-[600px]:px-[15px] max-[600px]:pb-6">
+
+            <h1 class="font-['Georgia',serif] font-normal text-[30px] tracking-wide mb-9 text-[#a9762f] max-[600px]:text-[22px] max-[600px]:mb-6">
+                Categories</h1>
 
             @if ($categories->count() > 0)
-                <div class="grid">
+                <div class="grid grid-cols-3 gap-6 items-stretch max-[900px]:grid-cols-2 max-[600px]:grid-cols-1">
                     @foreach ($categories as $category)
-                                <a href="{{ route('categories.public_show', $category->id) }}" class="cat-card">
-                                    <div class="cat-image">
-                                        <img src="{{ match (strtolower($category->name)) {
-                            'sport' => 'https://images.unsplash.com/photo-1683714152903-a17197c2347c?q=80&w=775&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-                            'luxury' => 'https://images.unsplash.com/photo-1600003014755-ba31aa59c4b6?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-                            'classic' => 'https://images.unsplash.com/photo-1628483211149-1aed2a58cf81?q=80&w=386&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-                            'casual' => 'https://images.unsplash.com/photo-1633869699811-cd4f63049b36?q=80&w=465&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-                            'smart watch' => 'https://images.unsplash.com/photo-1551816230-ef5deaed4a26?q=80&w=465&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-                            'women' => 'https://images.unsplash.com/photo-1647738233930-22e3639fed78?q=80&w=871&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-                            default => 'https://images.unsplash.com/photo-1524805444758-089113d48a6d?w=400',
-                        } }}" alt="{{ $category->name }}" style="width:100%; height:100%; object-fit:cover;">
-                                    </div>
-                                    <div class="cat-body">
-                                        <h3>{{ $category->name }}</h3>
-                                        <span class="count">{{ $category->watches->count() }} watches</span>
-                                    </div>
-                                </a>
+                        <a href="{{ route('categories.public_show', $category->id) }}"
+                            class="flex flex-col h-full no-underline text-inherit bg-white border border-[#e7e3da] rounded overflow-hidden">
+                            <div class="w-full h-[180px] overflow-hidden">
+                                <img src="{{ match (strtolower($category->name)) {
+                                    'sport' => 'https://images.unsplash.com/photo-1683714152903-a17197c2347c?q=80&w=775&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+                                    'luxury' => 'https://images.unsplash.com/photo-1600003014755-ba31aa59c4b6?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+                                    'classic' => 'https://images.unsplash.com/photo-1628483211149-1aed2a58cf81?q=80&w=386&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+                                    'casual' => 'https://images.unsplash.com/photo-1633869699811-cd4f63049b36?q=80&w=465&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+                                    'smart watch' => 'https://images.unsplash.com/photo-1551816230-ef5deaed4a26?q=80&w=465&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+                                    'women' => 'https://images.unsplash.com/photo-1647738233930-22e3639fed78?q=80&w=871&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+                                    default => 'https://images.unsplash.com/photo-1524805444758-089113d48a6d?w=400',
+                                } }}" alt="{{ $category->name }}" class="w-full h-full object-cover block">
+                            </div>
+                            <div class="p-[15px] font-sans flex-1">
+                                <h3 class="font-['Georgia',serif] font-normal text-lg text-[#1f1f1f] mb-1.5">{{ $category->name }}</h3>
+                                <span class="text-[13px] text-[#8a8676]">{{ $category->watches->count() }} watches</span>
+                            </div>
+                        </a>
                     @endforeach
                 </div>
             @else
-                <div class="empty-msg">No categories available yet.</div>
+                <div class="font-sans text-center text-[#9b968a] py-[60px]">No categories available yet.</div>
             @endif
         </div>
     </div>
