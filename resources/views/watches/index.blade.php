@@ -29,7 +29,7 @@
         <table class="w-full min-w-[600px] border-collapse bg-white border border-[#e7e3da]">
             <thead class="bg-[#f5efe4]">
                 <tr>
-                    <th class="font-sans font-bold text-[13px] uppercase text-[#a9762f] p-3 text-left border-b border-[#e7e3da] max-[600px]:p-2 max-[600px]:text-sm">ID</th>
+                    <th class="font-sans font-bold text-[13px] uppercase text-[#a9762f] p-3 text-left border-b border-[#e7e3da] max-[600px]:p-2 max-[600px]:text-sm">#</th>
                     <th class="font-sans font-bold text-[13px] uppercase text-[#a9762f] p-3 text-left border-b border-[#e7e3da] max-[600px]:p-2 max-[600px]:text-sm">Image</th>
                     <th class="font-sans font-bold text-[13px] uppercase text-[#a9762f] p-3 text-left border-b border-[#e7e3da] max-[600px]:p-2 max-[600px]:text-sm">Model</th>
                     <th class="font-sans font-bold text-[13px] uppercase text-[#a9762f] p-3 text-left border-b border-[#e7e3da] max-[600px]:p-2 max-[600px]:text-sm">Brand</th>
@@ -42,7 +42,11 @@
             <tbody>
                 @forelse($watches as $watch)
                     <tr class="hover:bg-[#faf6ee]">
-                        <td class="font-sans p-3 border-b border-[#e7e3da] max-[600px]:p-2 max-[600px]:text-sm">{{ $watch->id }}</td>
+                        {{-- Numéro d'ordre affiché (toujours 1,2,3... sans trou) au lieu de l'ID brut de la base.
+                             $loop->iteration commence à 1 automatiquement dans un @forelse/@foreach.
+                             Si $watches est paginé (->paginate()), remplace la ligne ci-dessous par la version
+                             avec offset expliquée en commentaire plus bas. --}}
+                        <td class="font-sans p-3 border-b border-[#e7e3da] max-[600px]:p-2 max-[600px]:text-sm">{{ $loop->iteration }}</td>
                         <td class="font-sans p-3 border-b border-[#e7e3da] max-[600px]:p-2 max-[600px]:text-sm">
                             @if ($watch->image)
                                 <img src="{{ asset('storage/' . $watch->image) }}" alt="{{ $watch->model }}" width="60"
@@ -63,6 +67,8 @@
                         <td class="font-sans p-3 border-b border-[#e7e3da] max-[600px]:p-2 max-[600px]:text-sm">{{ $watch->price }} DH</td>
                         <td class="font-sans p-3 border-b border-[#e7e3da] max-[600px]:p-2 max-[600px]:text-sm">{{ $watch->stock }}</td>
                         <td class="font-sans p-3 border-b border-[#e7e3da] max-[600px]:p-2 max-[600px]:text-sm">
+                            {{-- Ces liens continuent d'utiliser le VRAI $watch->id : ne jamais le remplacer ici,
+                                 sinon View/Edit/Delete pointeront vers le mauvais enregistrement. --}}
                             <a href="{{ route('watches.show', $watch->id) }}" class="mr-2.5 no-underline text-[#a9762f]">View</a>
                             <a href="{{ route('watches.edit', $watch->id) }}" class="mr-2.5 no-underline text-[#a9762f]">Edit</a>
                             @if (auth()->user()->isAdmin())
@@ -83,6 +89,14 @@
             </tbody>
         </table>
     </div>
+
+    {{-- Si $watches vient de ->paginate(), ajoute ceci pour garder la continuité de la numérotation
+         entre les pages (page 2 démarre à 11, 21... au lieu de recommencer à 1) et affiche les liens de pagination :
+
+         <td>{{ ($watches->currentPage() - 1) * $watches->perPage() + $loop->iteration }}</td>
+         ...
+         <div class="mt-5">{{ $watches->links() }}</div>
+    --}}
 
 </body>
 

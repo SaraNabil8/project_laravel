@@ -29,7 +29,7 @@
         <table class="w-full min-w-[600px] border-collapse bg-white border border-[#e7e3da]">
             <thead class="bg-[#f5efe4]">
                 <tr>
-                    <th class="font-sans font-bold text-[13px] uppercase text-[#a9762f] p-3 text-left border-b border-[#e7e3da] max-[600px]:p-2 max-[600px]:text-sm">ID</th>
+                    <th class="font-sans font-bold text-[13px] uppercase text-[#a9762f] p-3 text-left border-b border-[#e7e3da] max-[600px]:p-2 max-[600px]:text-sm">#</th>
                     <th class="font-sans font-bold text-[13px] uppercase text-[#a9762f] p-3 text-left border-b border-[#e7e3da] max-[600px]:p-2 max-[600px]:text-sm">Name</th>
                     <th class="font-sans font-bold text-[13px] uppercase text-[#a9762f] p-3 text-left border-b border-[#e7e3da] max-[600px]:p-2 max-[600px]:text-sm">Actions</th>
                 </tr>
@@ -37,9 +37,13 @@
             <tbody>
                 @forelse($categories as $category)
                     <tr class="hover:bg-[#faf6ee]">
-                        <td class="font-sans p-3 border-b border-[#e7e3da] max-[600px]:p-2 max-[600px]:text-sm">{{ $category->id }}</td>
+                        {{-- Numéro d'ordre affiché (1,2,3... sans trou) au lieu de l'ID brut de la base.
+                             Si $categories est paginé (->paginate()), remplace par :
+                             ($categories->currentPage() - 1) * $categories->perPage() + $loop->iteration --}}
+                        <td class="font-sans p-3 border-b border-[#e7e3da] max-[600px]:p-2 max-[600px]:text-sm">{{ $loop->iteration }}</td>
                         <td class="font-sans p-3 border-b border-[#e7e3da] max-[600px]:p-2 max-[600px]:text-sm">{{ $category->name }}</td>
                         <td class="font-sans p-3 border-b border-[#e7e3da] max-[600px]:p-2 max-[600px]:text-sm">
+                            {{-- Actions : on garde le VRAI $category->id / $category, ne jamais y toucher --}}
                             <a href="{{ route('categories.show', $category->id) }}" class="mr-2.5 no-underline text-[#a9762f]">Show</a>
                             <a href="{{ route('categories.edit', $category) }}" class="mr-2.5 no-underline text-[#a9762f]">Edit</a>
                             @if (auth()->user()->isAdmin())
